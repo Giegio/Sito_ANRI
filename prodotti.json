@@ -1,0 +1,30 @@
+[
+  {
+    "titolo": "Pompa Elettrica PIUSI 70 l/min",
+    "descrizione": "Pompa per travaso gasolio ad alte prestazioni, ciclo continuo, protezione termica integrata.",
+    "categoria": "Pompe",
+    "brand": "Piusi",
+    "tag": "Nuovo"
+  },
+  {
+    "titolo": "Contalitri Digitale K24",
+    "descrizione": "Contalitri a turbina ad alta precisione, installazione in linea o all'estremità della manichetta.",
+    "categoria": "Accessori",
+    "brand": "Piusi",
+    "tag": "Promo"
+  },
+  {
+    "titolo": "Fleet Pro RFID",
+    "descrizione": "Sistema di controllo flotte con identificazione autista e veicolo tramite tecnologia RFID.",
+    "categoria": "Automazione",
+    "brand": "Anri",
+    "tag": "Best-Seller"
+  },
+  {
+    "titolo": "Pistola Automatica A60",
+    "descrizione": "Pistola con arresto automatico del flusso al raggiungimento del pieno, portata fino a 60 l/min.",
+    "categoria": "Accessori",
+    "brand": "Piusi",
+    "tag": ""
+  }
+]

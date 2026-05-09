@@ -1,0 +1,337 @@
+/* ============================================================
+   ANRI COMMERCIALE — components.js
+   Shared logic: header nav, mobile menu, modal, forms, scroll reveal
+   ============================================================ */
+
+(function () {
+  'use strict';
+
+  /* ── Feather Icons ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.feather) feather.replace();
+
+    initHeader();
+    initModal();
+    initScrollReveal();
+    initMagnetEffect();
+    initForms();
+    setFooterYear();
+    initSmoothScroll();
+    initSmartHeader();
+    initProductFilters();
+  });
+
+  /* ── Footer Year ── */
+  function setFooterYear() {
+    const el = document.getElementById('footer-year');
+    if (el) el.textContent = new Date().getFullYear();
+  }
+
+  /* ── Sticky Header ── */
+  function initHeader() {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('primary-nav');
+    if (hamburger && nav) {
+      hamburger.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', String(open));
+        hamburger.classList.toggle('active', open);
+      });
+
+      // Mobile dropdowns
+      document.querySelectorAll('.nav-item.has-dropdown > .nav-link').forEach(link => {
+        link.addEventListener('click', e => {
+          if (window.innerWidth < 1024) {
+            e.preventDefault();
+            link.closest('.nav-item').classList.toggle('open');
+          }
+        });
+      });
+
+      // Mobile sub-dropdowns
+      document.querySelectorAll('.has-sub-dropdown > a').forEach(link => {
+        link.addEventListener('click', e => {
+          if (window.innerWidth < 1024) {
+            e.preventDefault();
+            link.closest('.has-sub-dropdown').classList.toggle('open');
+          }
+        });
+      });
+
+      // Close on outside click
+      document.addEventListener('click', e => {
+        if (!header.contains(e.target)) {
+          nav.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          hamburger.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  /* ── Smart Header (Hide on scroll down, show on scroll up) ── */
+  function initSmartHeader() {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      if (currentScroll <= 80) {
+        header.classList.remove('header-hidden');
+        return;
+      }
+      if (currentScroll > lastScroll && !header.classList.contains('header-hidden')) {
+        // scroll down
+        header.classList.add('header-hidden');
+      } else if (currentScroll < lastScroll && header.classList.contains('header-hidden')) {
+        // scroll up
+        header.classList.remove('header-hidden');
+      }
+      lastScroll = currentScroll;
+    }, { passive: true });
+  }
+
+  /* ── Smooth Scroll ── */
+  function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          const top = target.getBoundingClientRect().top + window.scrollY - 84;
+          window.scrollTo({ top, behavior: 'smooth' });
+          document.getElementById('primary-nav')?.classList.remove('open');
+        }
+      });
+    });
+  }
+
+  /* ── Modal ── */
+  let _modalOpener = null; // element that triggered the modal, to restore focus on close
+
+  const FOCUSABLE = [
+    'a[href]', 'button:not([disabled])', 'input:not([disabled])',
+    'select:not([disabled])', 'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+  ].join(',');
+
+  function getFocusable(container) {
+    return Array.from(container.querySelectorAll(FOCUSABLE))
+      .filter(el => !el.closest('[hidden]') && getComputedStyle(el).display !== 'none');
+  }
+
+  function trapFocus(e) {
+    const overlay = document.getElementById('modal-overlay');
+    if (!overlay || overlay.hidden) return;
+    const focusable = getFocusable(overlay);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last  = focusable[focusable.length - 1];
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      }
+    }
+  }
+
+  window.openModal = function (context) {
+    const overlay = document.getElementById('modal-overlay');
+    const title   = document.getElementById('modal-title');
+    const subtitle = document.getElementById('modal-subtitle');
+    const product = document.getElementById('modal-product');
+    if (!overlay) return;
+
+    // Remember what triggered the modal
+    _modalOpener = document.activeElement;
+
+    const ctx = context || 'Informazioni Generali';
+    if (product) product.value = ctx;
+
+    const isInfo = ctx.includes('Informazioni') || ctx.includes('Catalogo');
+    if (title) title.textContent = isInfo ? 'Richiedi Informazioni' : "Richiedi un'offerta personalizzata";
+    if (subtitle) {
+      subtitle.textContent = (ctx !== 'Richiesta Offerta Generale' && ctx !== 'Informazioni Generali')
+        ? (isInfo
+            ? `Prodotto: ${ctx}. Compilate il form e vi risponderemo al più presto.`
+            : `Hai selezionato: ${ctx}. Il nostro team vi risponderà entro 24 ore lavorative.`)
+        : 'Compilate il modulo e vi ricontatteremo entro 24 ore lavorative.';
+    }
+
+    overlay.hidden = false;
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', trapFocus);
+    requestAnimationFrame(() => {
+      overlay.classList.add('open');
+      // Move focus to first focusable element inside modal
+      const focusable = getFocusable(overlay);
+      if (focusable.length) focusable[0].focus();
+    });
+  };
+
+  window.closeModal = function () {
+    const overlay = document.getElementById('modal-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.removeEventListener('keydown', trapFocus);
+    setTimeout(() => {
+      overlay.hidden = true;
+      document.body.style.overflow = '';
+      // Return focus to the element that opened the modal
+      if (_modalOpener && typeof _modalOpener.focus === 'function') {
+        _modalOpener.focus();
+        _modalOpener = null;
+      }
+    }, 300);
+  };
+
+  function initModal() {
+    const overlay = document.getElementById('modal-overlay');
+    if (!overlay) return;
+
+    // Ensure ARIA attributes are present
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'modal-title');
+    overlay.setAttribute('aria-describedby', 'modal-subtitle');
+    overlay.setAttribute('aria-hidden', 'true');
+
+    document.getElementById('modal-close')?.addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !overlay.hidden) closeModal();
+    });
+
+    // Modal form submit
+    const form = document.getElementById('modal-form');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!this.checkValidity()) { this.reportValidity(); return; }
+        const vals = getFormValues(this);
+        const subject = encodeURIComponent(`[Anri Commerciale] Richiesta da ${vals.name} – ${vals.product}`);
+        const body = encodeURIComponent(
+          `Nome: ${vals.name}\nAzienda: ${vals.company}\nEmail: ${vals.email}\nTelefono: ${vals.phone}\n\nProdotto/Area: ${vals.product}\n\nMessaggio:\n${vals.message}`
+        );
+        window.location.href = `mailto:anricommerciale@gmail.com?subject=${subject}&body=${body}`;
+        closeModal();
+      });
+    }
+  }
+
+  function getFormValues(form) {
+    const d = (id) => (form.querySelector(`#${id}`) || {}).value || '';
+    return {
+      name:    d('m-name'),
+      company: d('m-company'),
+      email:   d('m-email'),
+      phone:   d('m-phone'),
+      message: d('m-message'),
+      product: d('modal-product'),
+    };
+  }
+
+  /* ── Inline forms ── */
+  function initForms() {
+    document.querySelectorAll('.js-contact-form').forEach(form => {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!this.checkValidity()) { this.reportValidity(); return; }
+        const name     = this.querySelector('[name="name"]')?.value || '';
+        const company  = this.querySelector('[name="company"]')?.value || '';
+        const email    = this.querySelector('[name="email"]')?.value || '';
+        const phone    = this.querySelector('[name="phone"]')?.value || '';
+        const interest = this.querySelector('[name="interest"]')?.value || '';
+        const message  = this.querySelector('[name="message"]')?.value || '';
+        const subject  = encodeURIComponent(`[Anri Commerciale] Richiesta da ${name} – ${interest}`);
+        const body     = encodeURIComponent(
+          `Nome: ${name}\nAzienda: ${company}\nEmail: ${email}\nTelefono: ${phone}\nInteresse: ${interest}\n\nMessaggio:\n${message}`
+        );
+        window.location.href = `mailto:anricommerciale@gmail.com?subject=${subject}&body=${body}`;
+      });
+    });
+  }
+
+  /* ── Scroll Reveal ── */
+  function initScrollReveal() {
+    const els = document.querySelectorAll('[data-reveal]');
+    if (!els.length) return;
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          // Optionally stop observing after reveal
+          // observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+    els.forEach(el => observer.observe(el));
+  }
+
+  /* ── Magnet Effect ── */
+  function initMagnetEffect() {
+    const buttons = document.querySelectorAll('.btn-primary, .btn-ghost, .logo');
+    if (window.innerWidth < 1024) return;
+
+    buttons.forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  }
+
+
+  /* ── Product Filters ── */
+  function initProductFilters() {
+    const filters = document.querySelectorAll('.filter-btn');
+    if (!filters.length) return;
+
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const products = document.querySelectorAll('.product-card');
+        const filter = btn.dataset.filter;
+        
+        // Update active state
+        filters.forEach(f => {
+          f.classList.remove('active');
+          f.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        // Filter products with animation
+        products.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = 'block';
+            setTimeout(() => card.style.opacity = '1', 10);
+          } else {
+            card.style.opacity = '0';
+            setTimeout(() => card.style.display = 'none', 300);
+          }
+        });
+      });
+    });
+  }
+
+})();

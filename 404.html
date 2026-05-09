@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagina non trovata – Anri Commerciale</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="description" content="La pagina che stai cercando non esiste o è stata spostata. Torna alla home di Anri Commerciale." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/feather-icons"></script>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--dark-3, #05070A);
+      color: #fff;
+    }
+    .err-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.5rem;
+    }
+    .err-code {
+      font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+      font-size: clamp(6rem, 20vw, 14rem);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--green, #00D97E) 0%, var(--blue, #0050FF) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+    }
+    .err-title {
+      font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .err-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,.55);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .err-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .err-links {
+      margin-top: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .err-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 100px;
+      padding: 0.5em 1.2em;
+      transition: all 0.2s ease;
+    }
+    .err-link svg { width: 13px; height: 13px; }
+    .err-link:hover {
+      color: var(--green, #00D97E);
+      border-color: var(--green, #00D97E);
+      background: rgba(0,217,126,.07);
+    }
+    .err-grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(0,217,126,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,217,126,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .err-wrap { position: relative; z-index: 1; }
+    .err-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(0,217,126,.1);
+      border: 1px solid rgba(0,217,126,.25);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 1.5rem;
+    }
+    .err-icon svg { width: 32px; height: 32px; stroke: var(--green, #00D97E); }
+    footer.err-footer {
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,.25);
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+  </style>
+</head>
+<body>
+  <div class="err-grid-bg" aria-hidden="true"></div>
+
+  <div class="err-wrap" role="main">
+    <div class="err-icon" aria-hidden="true">
+      <i data-feather="alert-triangle"></i>
+    </div>
+    <div class="err-code" aria-label="Errore 404">404</div>
+    <h1 class="err-title">Pagina non trovata</h1>
+    <p class="err-desc">
+      La pagina che stai cercando non esiste, è stata spostata o l'indirizzo è stato digitato in modo errato.
+    </p>
+    <div class="err-actions">
+      <a href="index.html" class="btn btn-primary btn-lg">
+        <i data-feather="home"></i> Torna alla Home
+      </a>
+      <a href="contatti.html" class="btn btn-ghost btn-lg">
+        <i data-feather="send"></i> Contattaci
+      </a>
+    </div>
+    <nav class="err-links" aria-label="Pagine principali">
+      <a href="stazioni.html" class="err-link"><i data-feather="zap"></i> Stazioni</a>
+      <a href="cisterne.html" class="err-link"><i data-feather="layers"></i> Cisterne</a>
+      <a href="eshop.html" class="err-link"><i data-feather="shopping-bag"></i> E-Shop</a>
+      <a href="chi-siamo.html" class="err-link"><i data-feather="users"></i> Chi Siamo</a>
+    </nav>
+  </div>
+
+  <footer class="err-footer">
+    &copy; <span id="yr"></span> ANRI COMMERCIALE DI ANTONIO RIFUGIO — P.IVA 05167780484
+  </footer>
+
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>
+    if (window.feather) feather.replace();
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
