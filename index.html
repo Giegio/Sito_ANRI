@@ -37,7 +37,7 @@
     rel="stylesheet" />
 
   <!-- Preload critical LCP hero image -->
-  <link rel="preload" as="image" href="hero_fuel_station_premium_1777304331138.png" />
+  <link rel="preload" as="image" href="hero_fuel_station_premium.png" />
 
   <!-- Icons (Feather) -->
   <script src="https://unpkg.com/feather-icons"></script>
@@ -658,7 +658,7 @@
         </div>
 
         <div class="contact-form-wrap">
-          <form class="inline-contact-form" id="inline-contact-form" novalidate>
+          <form class="inline-contact-form js-contact-form" id="inline-contact-form" novalidate>
             <h3>Richiedi un preventivo rapido</h3>
             <div class="form-row">
               <div class="form-group">
@@ -831,150 +831,32 @@
   <!-- ===================================================
        JAVASCRIPT
   =================================================== -->
+  <script src="components.js"></script>
   <script>
-    // Init Feather Icons
-    feather.replace();
-
-    // ── Footer Year ──
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
-
-    // ── Sticky Header ──
-    const header = document.getElementById('site-header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
-    // ── Hamburger ──
-    const hamburger = document.getElementById('hamburger');
-    const nav = document.getElementById('primary-nav');
-    hamburger.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', open);
-      hamburger.classList.toggle('active', open);
-    });
-
-    // ── Dropdown hover (desktop) + click (mobile) ──
-    document.querySelectorAll('.nav-item.has-dropdown').forEach(item => {
-      const link = item.querySelector('.nav-link');
-      link.addEventListener('click', e => {
-        if (window.innerWidth < 1024) {
-          e.preventDefault();
-          item.classList.toggle('open');
-        }
-      });
-    });
-
-    // Close nav on outside click
-    document.addEventListener('click', e => {
-      if (!header.contains(e.target)) {
-        nav.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', false);
-        hamburger.classList.remove('active');
-      }
-    });
-
-    // ── Smooth Scroll ──
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          const offset = 80;
-          const top = target.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
-          nav.classList.remove('open');
-        }
-      });
-    });
-
-    // ── Modal ──
-    const overlay = document.getElementById('modal-overlay');
-    const modalTitle = document.getElementById('modal-title');
-    const modalSubtitle = document.getElementById('modal-subtitle');
-    const modalProduct = document.getElementById('modal-product');
-
-    function openModal(context) {
-      const ctx = context || 'Informazioni Generali';
-      modalProduct.value = ctx;
-      if (ctx.includes('Informazioni') || ctx === 'Richiesta Catalogo Completo') {
-        modalTitle.textContent = 'Richiedi Informazioni';
-        modalSubtitle.textContent = `Prodotto / Servizio: ${ctx}. Compilate il form e vi risponderemo al più presto.`;
-      } else {
-        modalTitle.textContent = 'Richiedi un\'offerta personalizzata';
-        modalSubtitle.textContent = ctx !== 'Richiesta Offerta Generale'
-          ? `Hai selezionato: ${ctx}. Il nostro team vi risponderà entro 24 ore lavorative.`
-          : 'Compilate il modulo e ti ricontatteremo entro 24 ore lavorative.';
-      }
-      overlay.hidden = false;
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => overlay.classList.add('open'), 10);
-      document.getElementById('modal-close').focus();
-    }
-
-    function closeModal() {
-      overlay.classList.remove('open');
-      setTimeout(() => {
-        overlay.hidden = true;
-        document.body.style.overflow = '';
-      }, 300);
-    }
-
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
-
-    // ── Modal Form Submit (mailto) ──
-    document.getElementById('modal-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (!this.checkValidity()) { this.reportValidity(); return; }
-      const name = document.getElementById('m-name').value;
-      const company = document.getElementById('m-company').value;
-      const email = document.getElementById('m-email').value;
-      const phone = document.getElementById('m-phone').value;
-      const message = document.getElementById('m-message').value;
-      const product = modalProduct.value;
-      const subject = encodeURIComponent(`[Anri Commerciale] Richiesta da ${name} – ${product}`);
-      const body = encodeURIComponent(`Nome: ${name}\nAzienda: ${company}\nEmail: ${email}\nTelefono: ${phone}\n\nProdotto/Area: ${product}\n\nMessaggio:\n${message}`);
-      window.location.href = `mailto:info@anricommerciale.it?subject=${subject}&body=${body}`;
-      closeModal();
-    });
-
-    // ── Inline Form Submit ──
-    document.getElementById('inline-contact-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (!this.checkValidity()) { this.reportValidity(); return; }
-      const name = document.getElementById('cf-name').value;
-      const company = document.getElementById('cf-company').value;
-      const email = document.getElementById('cf-email').value;
-      const phone = document.getElementById('cf-phone').value;
-      const interest = document.getElementById('cf-interest').value;
-      const message = document.getElementById('cf-message').value;
-      const subject = encodeURIComponent(`[Anri Commerciale] Richiesta da ${name} – ${interest}`);
-      const body = encodeURIComponent(`Nome: ${name}\nAzienda: ${company}\nEmail: ${email}\nTelefono: ${phone}\nInteresse: ${interest}\n\nMessaggio:\n${message}`);
-      window.location.href = `mailto:info@anricommerciale.it?subject=${subject}&body=${body}`;
-    });
-
-    // ── E-Shop Dynamic Loading ──
+    // Index page specific logic only: E-Shop dynamic product loading.
     document.addEventListener('DOMContentLoaded', async () => {
       const grid = document.getElementById('product-grid');
       if (!grid) return;
+
       try {
         const response = await fetch('prodotti.json');
         const products = await response.json();
         grid.innerHTML = '';
-        
-        products.forEach(p => {
+
+        products.forEach((p) => {
           const article = document.createElement('article');
           article.className = 'product-card';
-          
-          let rawCat = p.categoria.toLowerCase();
-          let filterCat = rawCat === 'automazione' ? 'flotte' : rawCat;
+
+          const rawCat = p.categoria.toLowerCase();
+          const filterCat = rawCat === 'automazione' ? 'flotte' : rawCat;
           article.dataset.category = filterCat;
-          
+
           const imgPath = `Prodotti/${p.titolo}.jpg`;
-          const fallbackImg = "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&q=75";
-          let badgeHtml = p.tag ? `<span class="product-badge ${p.tag.toLowerCase() === 'promo' ? 'product-badge--promo' : ''}">${p.tag}</span>` : '';
-          
+          const fallbackImg = 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&q=75';
+          const badgeHtml = p.tag
+            ? `<span class="product-badge ${p.tag.toLowerCase() === 'promo' ? 'product-badge--promo' : ''}">${p.tag}</span>`
+            : '';
+
           article.innerHTML = `
             <div class="product-img-wrap">
               <img src="${imgPath}" alt="${p.titolo}" width="400" height="300" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImg}';">
@@ -991,45 +873,13 @@
           `;
           grid.appendChild(article);
         });
+
         if (window.feather) feather.replace();
-
-        // ── E-Shop Filter (Ripristinato) ──
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
-            btn.classList.add('active');
-            btn.setAttribute('aria-selected', 'true');
-            const filter = btn.dataset.filter;
-            
-            const productCards = document.querySelectorAll('.product-card');
-            productCards.forEach(card => {
-              const show = filter === 'all' || card.dataset.category === filter;
-              card.style.opacity = show ? '1' : '0';
-              card.style.transform = show ? 'scale(1)' : 'scale(0.95)';
-              card.style.pointerEvents = show ? 'auto' : 'none';
-              card.style.position = show ? '' : 'absolute';
-              card.hidden = !show;
-            });
-          });
-        });
-
       } catch (err) {
-        console.error("Errore caricamento prodotti:", err);
+        console.error('Errore caricamento prodotti:', err);
         grid.innerHTML = '<p style="grid-column:1/-1; text-align:center;">Errore nel caricamento dei prodotti. Riprova più tardi.</p>';
       }
     });
-    // ── Scroll Reveal ──
-    const revealEls = document.querySelectorAll('.cat-card, .product-card, .usp-item, .pillar, .stat, .about-img, [data-reveal]');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    revealEls.forEach(el => { el.classList.add('reveal'); observer.observe(el); });
   </script>
 </body>
 

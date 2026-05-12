@@ -267,7 +267,9 @@
 
   /* ── Scroll Reveal ── */
   function initScrollReveal() {
-    const els = document.querySelectorAll('[data-reveal]');
+    const els = document.querySelectorAll(
+      '[data-reveal], .cat-card, .product-card, .usp-item, .pillar, .stat, .about-img'
+    );
     if (!els.length) return;
 
     const observer = new IntersectionObserver(entries => {
@@ -280,7 +282,10 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
 
-    els.forEach(el => observer.observe(el));
+    els.forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
   }
 
   /* ── Magnet Effect ── */
