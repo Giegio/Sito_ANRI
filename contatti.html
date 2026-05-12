@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <script src="analytics.js"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contatti - Anri Commerciale | Richiedi un Preventivo</title>
@@ -124,7 +131,7 @@
           <h1 id="contact-hero-title" class="contact-hero-title">
             Ogni grande impianto<br />inizia da<br /><em class="hero-highlight">una conversazione.</em>
           </h1>
-          <p>Che si tratti di un progetto nuovo, di un ammodernamento o di un componente specifico: raccontaci la tua esigenza. Il nostro team tecnico ti risponderà con un'analisi concreta entro 24 ore lavorative.</p>
+          <p>Che si tratti di un progetto nuovo, di un ammodernamento o di un componente specifico: raccontaci la tua esigenza. Il nostro team tecnico ti risponderÃ  con un'analisi concreta entro 24 ore lavorative.</p>
           <ul class="contact-hero-quick">
             <li><i data-feather="clock"></i> <strong>Risposta entro 24h</strong> nei giorni lavorativi</li>
             <li><i data-feather="check-circle"></i> <strong>Preventivo gratuito</strong> e senza impegno</li>
@@ -163,7 +170,7 @@
             <div>
               <strong>Assistenza Tecnica</strong>
               <span>assistenza@anricommerciale.it</span>
-              <small>Clienti con contratto: priorità alta</small>
+              <small>Clienti con contratto: prioritÃ  alta</small>
             </div>
           </div>
         </div>
@@ -178,74 +185,100 @@
         <div class="contact-form-col">
           <span class="section-label">Modulo di contatto</span>
           <h2 id="form-heading" class="section-title">Invia la tua richiesta</h2>
-          <p>Compila il modulo con i tuoi dati e la descrizione del progetto. Riceverai un'offerta tecnica dettagliata preparata da un nostro specialista.</p>
+          <p>Compila il modulo con i tuoi dati e la descrizione del progetto. Riceverai un'offerta tecnica dettagliata preparata da un nostro specialista.</p>          <form class="main-contact-form js-multi-step-form" id="main-contact-form" novalidate>
+            <div class="form-progress">
+              <div class="progress-bar"><div class="progress-bar-fill"></div></div>
+              <div class="step-labels">
+                <span>Contatti</span>
+                <span>Progetto</span>
+                <span>Richiesta</span>
+              </div>
+            </div>
 
-          <form class="main-contact-form js-contact-form" id="main-contact-form" novalidate>
-            <div class="form-row">
+            <!-- STEP 1: Contatti -->
+            <div class="form-step active" data-step="1">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fc-name">Nome e Cognome *</label>
+                  <input type="text" id="fc-name" name="name" placeholder="Mario Rossi" required />
+                </div>
+                <div class="form-group">
+                  <label for="fc-company">Azienda</label>
+                  <input type="text" id="fc-company" name="company" placeholder="Acme S.r.l." />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fc-email">Email *</label>
+                  <input type="email" id="fc-email" name="email" placeholder="mario@esempio.it" required />
+                </div>
+                <div class="form-group">
+                  <label for="fc-phone">Telefono *</label>
+                  <input type="tel" id="fc-phone" name="phone" placeholder="+39 333 1234567" required />
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn-primary btn-next btn-full">Prossimo Step <i data-feather="chevron-right"></i></button>
+              </div>
+            </div>
+
+            <!-- STEP 2: Progetto -->
+            <div class="form-step" data-step="2">
               <div class="form-group">
-                <label for="fc-name">Nome e Cognome *</label>
-                <input type="text" id="fc-name" name="name" placeholder="Mario Rossi" required />
+                <label for="fc-interest">Tipo di Impianto / Interesse *</label>
+                <select id="fc-interest" name="interest" required>
+                  <option value="">- Seleziona il tipo di richiesta -</option>
+                  <option value="preventivo-stazione">Stazione di Rifornimento</option>
+                  <option value="preventivo-cisterne">Cisterne e Serbatoi</option>
+                  <option value="preventivo-flotte">Sistema Controllo Flotte</option>
+                  <option value="info-prodotto">Informazioni Prodotto</option>
+                  <option value="altro">Altro</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fc-location">Provincia / Regione *</label>
+                  <input type="text" id="fc-location" name="location" placeholder="Es. Milano / Lombardia" required />
+                </div>
+                <div class="form-group">
+                  <label for="fc-liters">Litraggio stimato (L)</label>
+                  <input type="text" id="fc-liters" name="liters" placeholder="es. 10000" />
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn-prev">Indietro</button>
+                <button type="button" class="btn btn-primary btn-next">Avanti <i data-feather="chevron-right"></i></button>
+              </div>
+            </div>
+
+            <!-- STEP 3: Richiesta -->
+            <div class="form-step" data-step="3">
+              <div class="form-group">
+                <label for="fc-message">Descrizione della richiesta *</label>
+                <textarea id="fc-message" name="message" rows="4" placeholder="Descrivi brevemente il tuo progettoâ€¦" required></textarea>
               </div>
               <div class="form-group">
-                <label for="fc-company">Azienda</label>
-                <input type="text" id="fc-company" name="company" placeholder="Acme S.r.l." />
+                <label for="fc-how">Come ci hai trovato?</label>
+                <select id="fc-how" name="how">
+                  <option value="">- Opzionale -</option>
+                  <option value="google">Ricerca Google</option>
+                  <option value="passaparola">Passaparola</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="altro">Altro</option>
+                </select>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" id="fc-privacy" name="privacy" required />
+                <label for="fc-privacy">Accetto la <a href="#" target="_blank">Privacy Policy</a> *</label>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn-prev">Indietro</button>
+                <button type="submit" class="btn btn-primary btn-lg">
+                  Invia la Richiesta <i data-feather="send"></i>
+                </button>
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="fc-email">Email *</label>
-                <input type="email" id="fc-email" name="email" placeholder="mario@esempio.it" required />
-              </div>
-              <div class="form-group">
-                <label for="fc-phone">Telefono *</label>
-                <input type="tel" id="fc-phone" name="phone" placeholder="+39 333 1234567" required />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="fc-interest">Motivo della richiesta *</label>
-              <select id="fc-interest" name="interest" required>
-                <option value="">- Seleziona il tipo di richiesta -</option>
-                <option value="preventivo-stazione">Preventivo: Stazione di Rifornimento</option>
-                <option value="preventivo-cisterne">Preventivo: Cisterne e Serbatoi</option>
-                <option value="preventivo-flotte">Preventivo: Sistema Controllo Flotte</option>
-                <option value="info-prodotto">Informazioni su Prodotto (E-Shop)</option>
-                <option value="assistenza">Assistenza Tecnica</option>
-                <option value="ricambi">Richiesta Ricambi</option>
-                <option value="catalogo">Richiesta Catalogo</option>
-                <option value="altro">Altro</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="fc-location">Provincia / Regione</label>
-              <input type="text" id="fc-location" name="location" placeholder="Es. Milano / Lombardia" />
-            </div>
-            <div class="form-group">
-              <label for="fc-message">Descrizione del progetto o della richiesta *</label>
-              <textarea id="fc-message" name="message" rows="6" placeholder="Descrivi brevemente il tuo progetto: tipologia di impianto, volume stimato, tempi, eventuali vincoli normativi o di sito che già conosci..." required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="fc-how">Come ci hai trovato?</label>
-              <select id="fc-how" name="how">
-                <option value="">- Opzionale -</option>
-                <option value="google">Ricerca Google</option>
-                <option value="passaparola">Passaparola</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="fiera">Fiera di settore</option>
-                <option value="altro">Altro</option>
-              </select>
-            </div>
-            <div class="form-group form-check">
-              <input type="checkbox" id="fc-privacy" name="privacy" required />
-              <label for="fc-privacy">Ho letto e accetto la <a href="#" target="_blank">Privacy Policy</a>. Acconsento al trattamento dei dati per ricevere una risposta alla mia richiesta. *</label>
-            </div>
-            <div class="form-group form-check">
-              <input type="checkbox" id="fc-newsletter" name="newsletter" />
-              <label for="fc-newsletter">Desidero ricevere aggiornamenti su nuovi prodotti e novità normative (facoltativo).</label>
-            </div>
-            <button type="submit" class="btn btn-primary btn-full btn-lg">
-              <i data-feather="send"></i> Invia la Richiesta
-            </button>
-            <p class="form-note">* Campi obbligatori. I tuoi dati non verranno ceduti a terzi e verranno utilizzati esclusivamente per rispondere alla tua richiesta.</p>
+            <p class="form-note">* Campi obbligatori. Risposta entro 24 ore.</p>
           </form>
         </div>
 
@@ -275,10 +308,10 @@
 
           <!-- Office Hours -->
           <div class="office-info-card">
-            <h3><i data-feather="clock"></i> Orari e Disponibilità</h3>
+            <h3><i data-feather="clock"></i> Orari e DisponibilitÃ </h3>
             <table class="hours-table">
               <tbody>
-                <tr><td>Lunedì - Venerdì</td><td><strong>08:30 - 13:00 / 14:00 - 18:00</strong></td></tr>
+                <tr><td>LunedÃ¬ - VenerdÃ¬</td><td><strong>08:30 - 13:00 / 14:00 - 18:00</strong></td></tr>
                 <tr><td>Sabato</td><td><strong>09:00 - 12:00</strong> (su appuntamento)</td></tr>
                 <tr class="closed-row"><td>Domenica</td><td>Chiuso</td></tr>
               </tbody>
@@ -312,7 +345,7 @@
         <div class="section-header">
           <span class="section-label">FAQ</span>
           <h2 id="faq-heading" class="section-title">Domande frequenti</h2>
-          <p class="section-desc">Le risposte alle domande che riceviamo più spesso. Se non trovi quello che cerchi, contattaci direttamente.</p>
+          <p class="section-desc">Le risposte alle domande che riceviamo piÃ¹ spesso. Se non trovi quello che cerchi, contattaci direttamente.</p>
         </div>
 
         <div class="faq-grid">
@@ -324,7 +357,7 @@
                 <i data-feather="plus" class="faq-icon"></i>
               </button>
               <div class="faq-answer" hidden>
-                <p>Offriamo entrambe le opzioni. Per i prodotti dell'E-Shop la fornitura è diretta, con consegna su tutto il territorio nazionale. Per le soluzioni più complesse (stazioni di rifornimento, cisterne) gestiamo anche la progettazione, l'installazione chiavi in mano e il collaudo dell'impianto con tecnici certificati.</p>
+                <p>Offriamo entrambe le opzioni. Per i prodotti dell'E-Shop la fornitura Ã¨ diretta, con consegna su tutto il territorio nazionale. Per le soluzioni piÃ¹ complesse (stazioni di rifornimento, cisterne) gestiamo anche la progettazione, l'installazione chiavi in mano e il collaudo dell'impianto con tecnici certificati.</p>
               </div>
             </div>
 
@@ -334,7 +367,7 @@
                 <i data-feather="plus" class="faq-icon"></i>
               </button>
               <div class="faq-answer" hidden>
-                <p>Per prodotti semplici dell'E-Shop, una risposta arriva solitamente entro poche ore. Per preventivi complessi (stazioni, cisterne personalizzate) il nostro standard è 24-48 ore lavorative dalla ricezione di tutte le informazioni necessarie. Per questo nel form chiediamo di descrivere bene il progetto: più dettagli fornisci, più accurata sarà l'offerta.</p>
+                <p>Per prodotti semplici dell'E-Shop, una risposta arriva solitamente entro poche ore. Per preventivi complessi (stazioni, cisterne personalizzate) il nostro standard Ã¨ 24-48 ore lavorative dalla ricezione di tutte le informazioni necessarie. Per questo nel form chiediamo di descrivere bene il progetto: piÃ¹ dettagli fornisci, piÃ¹ accurata sarÃ  l'offerta.</p>
               </div>
             </div>
 
@@ -366,7 +399,7 @@
                 <i data-feather="plus" class="faq-icon"></i>
               </button>
               <div class="faq-answer" hidden>
-                <p>Sì. Proponiamo contratti di manutenzione programmata annuale o pluriennale che includono: visita tecnica preventiva, sostituzione componenti soggetti ad usura, verifica e taratura dei contalitri fiscali, aggiornamento software gestionale e priorità sulle chiamate di emergenza. Contattaci per un preventivo personalizzato.</p>
+                <p>SÃ¬. Proponiamo contratti di manutenzione programmata annuale o pluriennale che includono: visita tecnica preventiva, sostituzione componenti soggetti ad usura, verifica e taratura dei contalitri fiscali, aggiornamento software gestionale e prioritÃ  sulle chiamate di emergenza. Contattaci per un preventivo personalizzato.</p>
               </div>
             </div>
 
@@ -386,7 +419,7 @@
                 <i data-feather="plus" class="faq-icon"></i>
               </button>
               <div class="faq-answer" hidden>
-                <p>Assolutamente sì. La fornitura di cisterne e serbatoi può avvenire anche a materiale, con consegna sul cantiere. In questo caso forniamo tutta la documentazione CE e le istruzioni di installazione per la ditta che si occuperà della posa.</p>
+                <p>Assolutamente sÃ¬. La fornitura di cisterne e serbatoi puÃ² avvenire anche a materiale, con consegna sul cantiere. In questo caso forniamo tutta la documentazione CE e le istruzioni di installazione per la ditta che si occuperÃ  della posa.</p>
               </div>
             </div>
 
@@ -396,7 +429,7 @@
                 <i data-feather="plus" class="faq-icon"></i>
               </button>
               <div class="faq-answer" hidden>
-                <p>Sì. Il nostro portafoglio include sistemi dedicati all'erogazione di AdBlue®, HVO (Hydrotreated Vegetable Oil), biodiesel e - in collaborazione con partner selezionati - impianti per la distribuzione di GNL/GNC. La transizione verso carburanti alternativi è una delle aree di crescita principali del nostro business.</p>
+                <p>SÃ¬. Il nostro portafoglio include sistemi dedicati all'erogazione di AdBlueÂ®, HVO (Hydrotreated Vegetable Oil), biodiesel e - in collaborazione con partner selezionati - impianti per la distribuzione di GNL/GNC. La transizione verso carburanti alternativi Ã¨ una delle aree di crescita principali del nostro business.</p>
               </div>
             </div>
           </div>
@@ -521,28 +554,11 @@
         }
       });
     });
-
-    // Contact form
-    document.getElementById('main-contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      if (!this.checkValidity()) { this.reportValidity(); return; }
-      const name     = document.getElementById('fc-name').value;
-      const company  = document.getElementById('fc-company').value;
-      const email    = document.getElementById('fc-email').value;
-      const phone    = document.getElementById('fc-phone').value;
-      const interest = document.getElementById('fc-interest').value;
-      const location = document.getElementById('fc-location').value;
-      const message  = document.getElementById('fc-message').value;
-      const how      = document.getElementById('fc-how').value;
-      const subject  = encodeURIComponent(`[Anri Commerciale] Richiesta da ${name} - ${interest}`);
-      const body     = encodeURIComponent(
-        `Nome: ${name}\nAzienda: ${company}\nEmail: ${email}\nTelefono: ${phone}\nProvincia: ${location}\nMotivo: ${interest}\nCome ci ha trovato: ${how}\n\nMessaggio:\n${message}`
-      );
-      window.location.href = `mailto:anricommerciale@gmail.com?subject=${subject}&body=${body}`;
-    });
   </script>
 </body>
 </html>
+
+
 
 
 

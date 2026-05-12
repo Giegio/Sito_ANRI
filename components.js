@@ -15,11 +15,45 @@
     initScrollReveal();
     initMagnetEffect();
     initForms();
+    initMultiStepForm();
+    initTracking();
     setFooterYear();
     initSmoothScroll();
     initSmartHeader();
     initProductFilters();
   });
+
+  /* ── Tracking Helpers ── */
+  function initTracking() {
+    // Phone clicks
+    document.querySelectorAll('a[href^="tel:"]').forEach(el => {
+      el.addEventListener('click', () => {
+        if (window.trackEvent) window.trackEvent('click_phone', { phone: el.getAttribute('href') });
+      });
+    });
+
+    // Email clicks
+    document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+      el.addEventListener('click', () => {
+        if (window.trackEvent) window.trackEvent('click_email', { email: el.getAttribute('href') });
+      });
+    });
+
+    // Catalog downloads
+    document.querySelectorAll('.btn-catalog, [onclick*="Richiesta Catalogo"]').forEach(el => {
+      el.addEventListener('click', () => {
+        if (window.trackEvent) window.trackEvent('request_catalog', { location: 'Catalog Button' });
+      });
+    });
+
+    // CTA clicks
+    document.querySelectorAll('.btn-primary').forEach(el => {
+      el.addEventListener('click', () => {
+        const text = el.textContent.trim();
+        if (window.trackEvent) window.trackEvent('click_cta', { cta_text: text });
+      });
+    });
+  }
 
   /* ── Footer Year ── */
   function setFooterYear() {
@@ -136,19 +170,19 @@
     const focusable = getFocusable(overlay);
     if (!focusable.length) return;
     const first = focusable[0];
-    const last  = focusable[focusable.length - 1];
+    const last = focusable[focusable.length - 1];
     if (e.key === 'Tab') {
       if (e.shiftKey) {
         if (document.activeElement === first) { e.preventDefault(); last.focus(); }
       } else {
-        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     }
   }
 
   window.openModal = function (context) {
     const overlay = document.getElementById('modal-overlay');
-    const title   = document.getElementById('modal-title');
+    const title = document.getElementById('modal-title');
     const subtitle = document.getElementById('modal-subtitle');
     const product = document.getElementById('modal-product');
     if (!overlay) return;
@@ -164,8 +198,8 @@
     if (subtitle) {
       subtitle.textContent = (ctx !== 'Richiesta Offerta Generale' && ctx !== 'Informazioni Generali')
         ? (isInfo
-            ? `Prodotto: ${ctx}. Compilate il form e vi risponderemo al più presto.`
-            : `Hai selezionato: ${ctx}. Il nostro team vi risponderà entro 24 ore lavorative.`)
+          ? `Prodotto: ${ctx}. Compilate il form e vi risponderemo al più presto.`
+          : `Hai selezionato: ${ctx}. Il nostro team vi risponderà entro 24 ore lavorative.`)
         : 'Compilate il modulo e vi ricontatteremo entro 24 ore lavorative.';
     }
 
@@ -215,52 +249,149 @@
       if (e.key === 'Escape' && !overlay.hidden) closeModal();
     });
 
-    // Modal form submit
-    const form = document.getElementById('modal-form');
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (!this.checkValidity()) { this.reportValidity(); return; }
-        const vals = getFormValues(this);
-        const subject = encodeURIComponent(`[Anri Commerciale] Richiesta da ${vals.name} – ${vals.product}`);
-        const body = encodeURIComponent(
-          `Nome: ${vals.name}\nAzienda: ${vals.company}\nEmail: ${vals.email}\nTelefono: ${vals.phone}\n\nProdotto/Area: ${vals.product}\n\nMessaggio:\n${vals.message}`
-        );
-        window.location.href = `mailto:anricommerciale@gmail.com?subject=${subject}&body=${body}`;
-        closeModal();
+    // Form initialization is handled by initForms()
+  }
+
+  /* ── Multi-Step Form Logic ── */
+  function initMultiStepForm() {
+    const forms = document.querySelectorAll('.js-multi-step-form');
+    forms.forEach(form => {
+      let currentStep = 1;
+      const steps = form.querySelectorAll('.form-step');
+      const progressBar = form.querySelector('.progress-bar-fill');
+      const labels = form.querySelectorAll('.step-labels span');
+
+      const updateSteps = () => {
+        steps.forEach((s, idx) => {
+          s.classList.toggle('active', idx === currentStep - 1);
+        });
+
+        if (labels.length) {
+          labels.forEach((l, idx) => {
+            l.classList.toggle('active', idx <= currentStep - 1);
+          });
+        }
+
+        if (progressBar) {
+          const progress = ((currentStep - 1) / (steps.length - 1)) * 100;
+          progressBar.style.width = `${progress}%`;
+        }
+      };
+
+      form.querySelectorAll('.btn-next').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const inputs = steps[currentStep - 1].querySelectorAll('input, select, textarea');
+          let valid = true;
+          inputs.forEach(i => {
+            if (i.required && !i.value) {
+              i.classList.add('error');
+              i.reportValidity();
+              valid = false;
+            } else {
+              i.classList.remove('error');
+            }
+          });
+
+          if (valid && currentStep < steps.length) {
+            currentStep++;
+            updateSteps();
+            if (window.trackEvent) window.trackEvent('form_step_next', { step: currentStep, form_id: form.id });
+          }
+        });
       });
-    }
+
+      form.querySelectorAll('.btn-prev').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (currentStep > 1) {
+            currentStep--;
+            updateSteps();
+          }
+        });
+      });
+
+      // Initial state
+      updateSteps();
+    });
   }
 
-  function getFormValues(form) {
-    const d = (id) => (form.querySelector(`#${id}`) || {}).value || '';
-    return {
-      name:    d('m-name'),
-      company: d('m-company'),
-      email:   d('m-email'),
-      phone:   d('m-phone'),
-      message: d('m-message'),
-      product: d('modal-product'),
-    };
-  }
-
-  /* ── Inline forms ── */
+  /* ── Form Submission ── */
   function initForms() {
-    document.querySelectorAll('.js-contact-form').forEach(form => {
-      form.addEventListener('submit', function (e) {
+    const forms = document.querySelectorAll('.js-contact-form, .js-multi-step-form');
+    forms.forEach(form => {
+      form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        if (!this.checkValidity()) { this.reportValidity(); return; }
-        const name     = this.querySelector('[name="name"]')?.value || '';
-        const company  = this.querySelector('[name="company"]')?.value || '';
-        const email    = this.querySelector('[name="email"]')?.value || '';
-        const phone    = this.querySelector('[name="phone"]')?.value || '';
-        const interest = this.querySelector('[name="interest"]')?.value || '';
-        const message  = this.querySelector('[name="message"]')?.value || '';
-        const subject  = encodeURIComponent(`[Anri Commerciale] Richiesta da ${name} – ${interest}`);
-        const body     = encodeURIComponent(
-          `Nome: ${name}\nAzienda: ${company}\nEmail: ${email}\nTelefono: ${phone}\nInteresse: ${interest}\n\nMessaggio:\n${message}`
-        );
-        window.location.href = `mailto:anricommerciale@gmail.com?subject=${subject}&body=${body}`;
+
+        // Final validation check
+        if (!this.checkValidity()) {
+          this.reportValidity();
+          return;
+        }
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // Track submission start
+        if (window.trackEvent) window.trackEvent('form_submission_start', { form_id: form.id || 'form' });
+
+        // Show loading state
+        const btn = this.querySelector('button[type="submit"]');
+        if (btn) {
+          const originalContent = btn.innerHTML;
+          btn.disabled = true;
+          btn.innerHTML = '<i data-feather="loader" class="spin"></i> Invio in corso...';
+          if (window.feather) feather.replace();
+
+          try {
+            /* ── Google Apps Script Integration ── */
+            // Replace 'YOUR_SCRIPT_ID' with the ID of your deployed GAS Web App
+            const GAS_URL = 'https://script.google.com/macros/s/AKfycbw0cahHCzp3EMqC5eTT62BbGd3gvHaiHzMHtmc_L7zioUWITj_UFfet5xOTT1b9YBzW/exec';
+
+            await fetch(GAS_URL, {
+              method: 'POST',
+              mode: 'no-cors', // Important: Google Apps Script needs no-cors for simple fetches
+              cache: 'no-cache',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data)
+            });
+
+            // Success tracking
+            if (window.trackEvent) {
+              window.trackEvent('generate_lead', {
+                form_id: form.id || 'form',
+                product: data.product || 'general'
+              });
+            }
+
+            // Success UI: Replace form content with thank you message
+            if (form.classList.contains('modal-form')) {
+              const modalBox = form.closest('.modal-box');
+              if (modalBox) {
+                modalBox.innerHTML = `
+                  <button class="modal-close" onclick="closeModal()" aria-label="Chiudi">
+                    <i data-feather="x"></i>
+                  </button>
+                  <div class="modal-header" style="text-align: center; padding: 4rem 2rem;">
+                    <div class="modal-icon" style="margin: 0 auto 1.5rem; background: rgba(0,217,126,0.15); color: #00d97e; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
+                      <i data-feather="check-circle" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <h2 class="modal-title">Richiesta Inviata!</h2>
+                    <p class="modal-subtitle">Grazie ${data.name || ''}, abbiamo ricevuto la tua richiesta.<br>Un nostro tecnico ti contatterà entro 24 ore.</p>
+                    <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 2rem;">Chiudi</button>
+                  </div>
+                `;
+                if (window.feather) feather.replace();
+              }
+            } else {
+              window.location.href = 'thank-you.html';
+            }
+          } catch (err) {
+            console.error('Submission error:', err);
+            btn.disabled = false;
+            btn.innerHTML = originalContent;
+            if (window.feather) feather.replace();
+            alert('Si è verificato un errore durante l\'invio. Riprova tra poco.');
+          }
+        }
       });
     });
   }
@@ -316,7 +447,7 @@
       btn.addEventListener('click', () => {
         const products = document.querySelectorAll('.product-card');
         const filter = btn.dataset.filter;
-        
+
         // Update active state
         filters.forEach(f => {
           f.classList.remove('active');

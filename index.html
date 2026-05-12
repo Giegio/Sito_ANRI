@@ -5,6 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+
   <!-- ===== SEO META TAGS ===== -->
   <title>Anri Commerciale – Attrezzature per Erogazione e Movimentazione Carburanti</title>
   <meta name="description"
@@ -448,7 +458,7 @@
                 <div class="case-info">
                   <span class="case-cat">Stazioni Stradali</span>
                   <h3>Nuovo Impianto High-Tech</h3>
-                  <p>Integrazione completa di erogatori multimarca e sistemi di pagamento cloud.</p>
+                  <p>Integrazione completa di erogatori multimarca. <strong>+15% efficienza operativa.</strong></p>
                 </div>
               </div>
             </div>
@@ -462,7 +472,7 @@
                 <div class="case-info">
                   <span class="case-cat">Flotte Private</span>
                   <h3>Ottimizzazione Consumi Trasporti</h3>
-                  <p>Implementazione di centraline RFID e software di monitoraggio remoto.</p>
+                  <p>Monitoraggio remoto RFID. <strong>-12% sprechi carburante</strong> per flotta di 50 mezzi.</p>
                 </div>
               </div>
             </div>
@@ -476,7 +486,7 @@
                 <div class="case-info">
                   <span class="case-cat">EV Charger</span>
                   <h3>Infrastruttura Ricarica E-Mobility</h3>
-                  <p>Fornitura e installazione di colonnine ultra-fast per stazioni di servizio multi-energy.</p>
+                  <p>Colonnine ultra-fast. <strong>ROI stimato in 24 mesi</strong> grazie all'integrazione smart.</p>
                 </div>
               </div>
             </div>
@@ -490,8 +500,8 @@
                 <div class="case-info">
                   <span class="case-cat">Datacenter</span>
                   <h3>Sicurezza Alimentazione Continua</h3>
-                  <p>Sistemi di stoccaggio e pompaggio in ridondanza per l'alimentazione dei gruppi elettrogeni di
-                    emergenza.</p>
+                  <p>Sistemi di pompaggio ridondati. <strong>Affidabilità garantita 99.9%</strong> per backup critici.
+                  </p>
                 </div>
               </div>
             </div>
@@ -555,6 +565,48 @@
           <button class="btn btn-primary" onclick="openModal('Contatto Chi Siamo')">
             <i data-feather="send"></i> Parla con un nostro esperto
           </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TESTIMONIALS ── -->
+    <section class="testimonials" id="testimonianze" aria-labelledby="test-heading">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <span class="section-label">Dicono di noi</span>
+          <h2 id="test-heading" class="section-title">La fiducia dei nostri clienti</h2>
+        </div>
+
+        <div class="testimonial-grid">
+          <div class="testimonial-card" data-reveal="fade">
+            <div class="test-quote">"Professionalità e competenza tecnica fuori dal comune. Hanno risolto un problema di
+              integrazione sistemi che altri non riuscivano a gestire."</div>
+            <div class="test-author">
+              <strong>Ing. Roberto M.</strong>
+              <span>Responsabile Logistica, Firenze</span>
+            </div>
+          </div>
+          <div class="testimonial-card delay-200" data-reveal="fade">
+            <div class="test-quote">"Le cisterne fornite da Anri sono sinonimo di qualità. Assistenza post-vendita
+              sempre presente e risolutiva. Consigliatissimo."</div>
+            <div class="test-author">
+              <strong>Marco S.</strong>
+              <span>Titolare Azienda Agricola, Arezzo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="partner-logos" data-reveal="fade">
+          <p class="partner-title">Partner Tecnici Certificati</p>
+          <div class="logo-flex">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Gilbarco_Veeder-Root_logo.svg/320px-Gilbarco_Veeder-Root_logo.svg.png"
+              alt="Gilbarco Veeder-Root" class="partner-logo" />
+            <img src="https://www.piusi.com/images/piusi_logo.png" alt="Piusi" class="partner-logo"
+              onerror="this.style.display='none'" />
+            <img src="https://www.emiliana-serbatoi.com/images/logo.png" alt="Emiliana Serbatoi" class="partner-logo"
+              onerror="this.style.display='none'" />
+          </div>
         </div>
       </div>
     </section>
@@ -790,40 +842,102 @@
         <p class="modal-subtitle" id="modal-subtitle">Completa il modulo e ti ricontatteremo entro 24 ore lavorative.
         </p>
       </div>
-      <form class="modal-form" id="modal-form" novalidate>
+      <form class="modal-form js-multi-step-form" id="modal-form" novalidate>
         <input type="hidden" id="modal-product" name="product" />
-        <div class="form-row">
-          <div class="form-group">
-            <label for="m-name">Nome e Cognome *</label>
-            <input type="text" id="m-name" name="name" placeholder="Mario Rossi" required />
+
+        <div class="form-progress">
+          <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
           </div>
-          <div class="form-group">
-            <label for="m-company">Azienda</label>
-            <input type="text" id="m-company" name="company" placeholder="Acme S.r.l." />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="m-email">Email *</label>
-            <input type="email" id="m-email" name="email" placeholder="mario@esempio.it" required />
-          </div>
-          <div class="form-group">
-            <label for="m-phone">Telefono</label>
-            <input type="tel" id="m-phone" name="phone" placeholder="+39 333 1234567" />
+          <div class="step-labels">
+            <span>Contatti</span>
+            <span>Dettagli</span>
+            <span>Invio</span>
           </div>
         </div>
-        <div class="form-group">
-          <label for="m-message">Messaggio</label>
-          <textarea id="m-message" name="message" rows="4"
-            placeholder="Descrivi brevemente la tua richiesta o il tuo progetto…"></textarea>
+
+        <!-- STEP 1: Contatti -->
+        <div class="form-step active" data-step="1">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="m-name">Nome e Cognome *</label>
+              <input type="text" id="m-name" name="name" placeholder="Mario Rossi" required />
+            </div>
+            <div class="form-group">
+              <label for="m-company">Azienda</label>
+              <input type="text" id="m-company" name="company" placeholder="Acme S.r.l." />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="m-email">Email *</label>
+              <input type="email" id="m-email" name="email" placeholder="mario@esempio.it" required />
+            </div>
+            <div class="form-group">
+              <label for="m-phone">Telefono</label>
+              <input type="tel" id="m-phone" name="phone" placeholder="+39 333 1234567" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-primary btn-next btn-full">Avanti <i
+                data-feather="chevron-right"></i></button>
+          </div>
         </div>
-        <div class="form-group form-check">
-          <input type="checkbox" id="m-privacy" name="privacy" required />
-          <label for="m-privacy">Ho letto e accetto la <a href="#" target="_blank">Privacy Policy</a> *</label>
+
+        <!-- STEP 2: Dettagli -->
+        <div class="form-step" data-step="2">
+          <div class="form-group">
+            <label for="m-interest">Tipo di Impianto / Interesse *</label>
+            <select id="m-interest" name="interest" required>
+              <option value="">— Seleziona —</option>
+              <option value="stazioni">Stazioni di Rifornimento</option>
+              <option value="cisterne">Cisterne & Serbatoi</option>
+              <option value="pompe">Pompe & Travaso</option>
+              <option value="flotte">Controllo Flotte</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="m-liters">Litraggio stimato (L)</label>
+              <input type="text" id="m-liters" name="liters" placeholder="es. 5000" />
+            </div>
+            <div class="form-group">
+              <label for="m-area">Area Geografica</label>
+              <input type="text" id="m-area" name="area" placeholder="es. Toscana" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-prev">Indietro</button>
+            <button type="button" class="btn btn-primary btn-next">Avanti <i data-feather="chevron-right"></i></button>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-full">
-          <i data-feather="send"></i> Invia la Richiesta
-        </button>
+
+        <!-- STEP 3: Invio -->
+        <div class="form-step" data-step="3">
+          <div class="form-group">
+            <label for="m-timing">Quando prevedi di realizzare l'impianto? *</label>
+            <select id="m-timing" name="timing" required>
+              <option value="">— Seleziona —</option>
+              <option value="asap">Il prima possibile</option>
+              <option value="3months">Entro 3 mesi</option>
+              <option value="6months">Oltre 6 mesi</option>
+              <option value="info">Sola richiesta informazioni</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="m-message">Note aggiuntive</label>
+            <textarea id="m-message" name="message" rows="3" placeholder="Altre informazioni utili…"></textarea>
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" id="m-privacy" name="privacy" required />
+            <label for="m-privacy">Accetto la <a href="#" target="_blank">Privacy Policy</a> *</label>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-prev">Indietro</button>
+            <button type="submit" class="btn btn-primary">Invia Richiesta <i data-feather="send"></i></button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
