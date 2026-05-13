@@ -350,7 +350,7 @@
               method: 'POST',
               mode: 'no-cors', // Important: Google Apps Script needs no-cors for simple fetches
               cache: 'no-cache',
-              headers: { 'Content-Type': 'application/json' },
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
               body: JSON.stringify(data)
             });
 
