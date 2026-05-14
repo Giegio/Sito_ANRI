@@ -8,6 +8,15 @@
 /* â”€â”€ 1. RESET & ROOT â”€â”€ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Better focus states for accessibility */
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 :root {
   /* Palette */
   --green:        #00D97E;
@@ -1970,5 +1979,48 @@ h1, h2, h3, h4, h5 {
 .partner-logo {
   height: 40px;
   width: auto;
+}
+
+/* ── STICKY MOBILE CTA ── */
+.mobile-sticky-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1rem;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--green);
+  color: var(--dark);
+  border-radius: 50%;
+  box-shadow: 0 8px 32px rgba(0, 217, 126, 0.4);
+  transition: all var(--t-fast) var(--ease);
+  cursor: pointer;
+  border: none;
+  animation: fabBounce 4s ease-in-out infinite;
+}
+
+@keyframes fabBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.mobile-sticky-cta:hover {
+  background: var(--green-dark);
+  color: #fff;
+  animation-play-state: paused;
+}
+
+.mobile-sticky-cta svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (min-width: 1024px) {
+  .mobile-sticky-cta {
+    display: none;
+  }
 }
 

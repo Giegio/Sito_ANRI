@@ -40,15 +40,51 @@
     content="Cisterne interrate e serbatoi fuori terra certificati. Fornitura e installazione chiavi in mano." />
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200&q=80" />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
     rel="stylesheet" />
 
+  <!-- Preload critical assets -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/barlowcondensed/v12/HTAKL3o-R1syS1dfm77M336z2f69Eq7X9bg.woff2" as="font" type="font/woff2" crossorigin />
+
   <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="pages.css" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.anricommerciale.it/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Datacenter",
+        "item": "https://www.anricommerciale.it/datacenter.html"
+      }]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Soluzioni per Datacenter",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Anri Commerciale"
+      },
+      "areaServed": "Italy",
+      "description": "Sistemi di stoccaggio e pompaggio in ridondanza per Datacenter."
+    }
+  ]
+  </script>
 </head>
 
 <body>
@@ -833,6 +869,11 @@
       }
     }
   </script>
+  <!-- Sticky Mobile CTA -->
+  <button class="mobile-sticky-cta" onclick="openModal('Mobile Floating CTA')" aria-label="Richiedi Preventivo">
+    <i data-feather="message-square"></i>
+  </button>
+
 </body>
 
 </html>

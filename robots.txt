@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.anricommerciale.it/sitemap.xml
+
+# Prevent indexing of temporary or private folders if any
+Disallow: /private/
+Disallow: /temp/

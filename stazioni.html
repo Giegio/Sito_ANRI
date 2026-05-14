@@ -2,10 +2,10 @@
 <html lang="it">
 
 <head>
-    <script src="analytics.js"></script>
+  <script src="analytics.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-XXXXXXXXXX');
   </script>
@@ -47,9 +47,44 @@
     href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
     rel="stylesheet" />
 
+  <!-- Preload critical assets -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/barlowcondensed/v12/HTAKL3o-R1syS1dfm77M336z2f69Eq7X9bg.woff2" as="font" type="font/woff2" crossorigin />
+
   <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="pages.css" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.anricommerciale.it/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Stazioni di Rifornimento",
+        "item": "https://www.anricommerciale.it/stazioni.html"
+      }]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Sistemi per Stazioni di Rifornimento",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Anri Commerciale"
+      },
+      "areaServed": "Italy",
+      "description": "Erogatori carburante, terminali di pagamento, software gestionale e infrastrutture tecnologiche per impianti stradali."
+    }
+  ]
+  </script>
 </head>
 
 <body>
@@ -62,7 +97,7 @@
 
       <nav class="primary-nav" id="primary-nav" aria-label="Navigazione principale">
         <ul class="nav-list">
-                              <li class="nav-item has-dropdown">
+          <li class="nav-item has-dropdown">
             <a href="#" class="nav-link">
               Le Nostre Soluzioni <i data-feather="chevron-down"></i>
             </a>
@@ -101,7 +136,7 @@
               </li>
             </ul>
           </li>
-<li class="nav-item has-dropdown">
+          <li class="nav-item has-dropdown">
             <a href="eshop.html" class="nav-link">E-Shop <i data-feather="chevron-down"></i></a>
             <ul class="dropdown-menu">
               <li><a href="eshop.html?cat=pompe">Pompe Carburante</a></li>
@@ -270,9 +305,6 @@
             <div class="subcat-brands">
               <span class="brands-label">Marchi disponibili:</span>
               <span class="brand-pill">Gilbarco Veeder-Root</span>
-              <span class="brand-pill">Wayne Fueling</span>
-              <span class="brand-pill">Tokheim</span>
-              <span class="brand-pill">Bennett</span>
             </div>
 
             <button class="btn btn-primary" onclick="openModal('Erogatori Carburante')">
@@ -346,9 +378,8 @@
 
             <div class="subcat-brands">
               <span class="brands-label">Marchi disponibili:</span>
-              <span class="brand-pill">Gilbarco Passport</span>
-              <span class="brand-pill">Tokheim Quantium</span>
-              <span class="brand-pill">Scheidt &amp; Bachmann</span>
+              <span class="brand-pill">Gilbarco</span>
+              <span class="brand-pill">Veeder-Root</span>
             </div>
 
             <button class="btn btn-primary" onclick="openModal('Terminali di Pagamento Self-Service')">
@@ -682,7 +713,8 @@
       <div class="container cta-band-inner">
         <div>
           <h2 id="cta-band-heading" class="cta-band-title">Hai un progetto in mente?</h2>
-          <p class="cta-band-desc">Raccontaci le tue esigenze. Il nostro team tecnico preparer&agrave; un'offerta dettagliata
+          <p class="cta-band-desc">Raccontaci le tue esigenze. Il nostro team tecnico preparer&agrave; un'offerta
+            dettagliata
             entro 24 ore lavorative, senza impegno.</p>
         </div>
         <div class="cta-band-actions">
@@ -799,13 +831,16 @@
       <div class="modal-header">
         <div class="modal-icon"><i data-feather="send"></i></div>
         <h2 id="modal-title" class="modal-title">Richiedi un'offerta personalizzata</h2>
-        <p class="modal-subtitle" id="modal-subtitle">Completa il modulo e ti ricontatteremo entro 24 ore lavorative.</p>
+        <p class="modal-subtitle" id="modal-subtitle">Completa il modulo e ti ricontatteremo entro 24 ore lavorative.
+        </p>
       </div>
       <form class="modal-form js-multi-step-form" id="modal-form" novalidate>
         <input type="hidden" id="modal-product" name="product" />
-        
+
         <div class="form-progress">
-          <div class="progress-bar"><div class="progress-bar-fill"></div></div>
+          <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+          </div>
           <div class="step-labels">
             <span>Contatti</span>
             <span>Dettagli</span>
@@ -836,7 +871,8 @@
             </div>
           </div>
           <div class="form-actions">
-            <button type="button" class="btn btn-primary btn-next btn-full">Avanti <i data-feather="chevron-right"></i></button>
+            <button type="button" class="btn btn-primary btn-next btn-full">Avanti <i
+                data-feather="chevron-right"></i></button>
           </div>
         </div>
 
@@ -845,7 +881,7 @@
           <div class="form-group">
             <label for="m-interest">Tipo di Impianto / Interesse *</label>
             <select id="m-interest" name="interest" required>
-              <option value="">— Seleziona —</option>
+              <option value="">ï¿½ Seleziona ï¿½</option>
               <option value="stazioni">Stazioni di Rifornimento</option>
               <option value="cisterne">Cisterne & Serbatoi</option>
               <option value="pompe">Pompe & Travaso</option>
@@ -874,7 +910,7 @@
           <div class="form-group">
             <label for="m-timing">Quando prevedi di realizzare l'impianto? *</label>
             <select id="m-timing" name="timing" required>
-              <option value="">— Seleziona —</option>
+              <option value="">ï¿½ Seleziona ï¿½</option>
               <option value="asap">Il prima possibile</option>
               <option value="3months">Entro 3 mesi</option>
               <option value="6months">Oltre 6 mesi</option>
@@ -883,7 +919,7 @@
           </div>
           <div class="form-group">
             <label for="m-message">Note aggiuntive</label>
-            <textarea id="m-message" name="message" rows="3" placeholder="Altre informazioni utili…"></textarea>
+            <textarea id="m-message" name="message" rows="3" placeholder="Altre informazioni utiliï¿½"></textarea>
           </div>
           <div class="form-group form-check">
             <input type="checkbox" id="m-privacy" name="privacy" required />
@@ -899,11 +935,11 @@
   </div>
 
   <script src="components.js"></script>
+  <!-- Sticky Mobile CTA -->
+  <button class="mobile-sticky-cta" onclick="openModal('Mobile Floating CTA')" aria-label="Richiedi Preventivo">
+    <i data-feather="message-square"></i>
+  </button>
+
 </body>
 
 </html>
-
-
-
-
-
