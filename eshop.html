@@ -148,12 +148,13 @@
               <li><a href="eshop.html?cat=serbatoi">Serbatoi Trasportabili</a></li>
               <li><a href="eshop.html?cat=flotte">Controllo Flotte</a></li>
               <li><a href="eshop.html?cat=accessori">Accessori</a></li>
+              <li><a href="eshop.html?cat=ricambi">Ricambi e Consumabili</a></li>
             </ul>
           </li>
           <li class="nav-item has-dropdown">
             <a href="chi-siamo.html" class="nav-link">Chi Siamo <i data-feather="chevron-down"></i></a>
             <ul class="dropdown-menu">
-              <li><a href="index.html#referenze">Case Studies</a></li>
+              <li style="display: none;"><!-- TODO: NextUpdate --><a href="index.html#referenze">Case Studies</a></li>
               <li><a href="chi-siamo.html">La nostra storia</a></li>
             </ul>
           </li>
@@ -162,7 +163,7 @@
       </nav>
       <div class="header-actions">
         <a href="tel:+393483650716" class="header-phone"><i data-feather="phone"></i><span>+39 348 3650716</span></a>
-        <button class="btn btn-primary btn-sm" onclick="openModal('Catalogo Completo E-Shop')">Catalogo PDF</button>
+        <button class="btn btn-primary btn-sm" onclick="openModal('Catalogo Completo E-Shop')" style="display: none;">Catalogo PDF</button> <!-- TODO: NextUpdate -->
         <button class="hamburger" id="hamburger" aria-label="Apri menu" aria-expanded="false"
           aria-controls="primary-nav">
           <span></span><span></span><span></span>
@@ -209,82 +210,42 @@
           <h3 class="sidebar-title">
             <i data-feather="filter"></i> Categorie
           </h3>
-          <ul class="sidebar-cats" role="list">
-            <li>
-              <button class="scat-btn active" data-filter="all" onclick="filterProducts('all', this)">
-                <i data-feather="grid"></i> Tutti i prodotti
-                <span class="scat-count">24</span>
-              </button>
-            </li>
-            <li>
-              <button class="scat-btn" data-filter="pompe" onclick="filterProducts('pompe', this)">
-                <i data-feather="droplet"></i> Pompe Carburante
-                <span class="scat-count">7</span>
-              </button>
-            </li>
-            <li>
-              <button class="scat-btn" data-filter="additivi" onclick="filterProducts('additivi', this)">
-                <i data-feather="wind"></i> Sistemi Additivi
-                <span class="scat-count">5</span>
-              </button>
-            </li>
-            <li>
-              <button class="scat-btn" data-filter="serbatoi" onclick="filterProducts('serbatoi', this)">
-                <i data-feather="box"></i> Serbatoi Trasportabili
-                <span class="scat-count">4</span>
-              </button>
-            </li>
-            <li>
-              <button class="scat-btn" data-filter="flotte" onclick="filterProducts('flotte', this)">
-                <i data-feather="truck"></i> Controllo Flotte
-                <span class="scat-count">4</span>
-              </button>
-            </li>
-            <li>
-              <button class="scat-btn" data-filter="accessori" onclick="filterProducts('accessori', this)">
-                <i data-feather="tool"></i> Accessori
-                <span class="scat-count">4</span>
-              </button>
-            </li>
+          <ul class="sidebar-cats" id="dynamic-categories" role="list">
+            <!-- Generato dinamicamente via JS -->
           </ul>
         </div>
 
         <div class="sidebar-section">
           <h3 class="sidebar-title"><i data-feather="zap"></i> Marchi</h3>
-          <div class="sidebar-checks">
-            <label class="check-item"><input type="checkbox" checked /><span>PIUSI</span></label>
-            <label class="check-item"><input type="checkbox" checked /><span>Tecalemit</span></label>
-            <label class="check-item"><input type="checkbox" checked /><span>Gespasa</span></label>
-            <label class="check-item"><input type="checkbox" checked /><span>Fill-Rite</span></label>
-            <label class="check-item"><input type="checkbox" checked /><span>Graco</span></label>
-            <label class="check-item"><input type="checkbox" checked /><span>Omnigena</span></label>
+          <div class="sidebar-checks" id="dynamic-brands">
+            <!-- Generato dinamicamente via JS -->
           </div>
         </div>
 
         <div class="sidebar-section">
           <h3 class="sidebar-title"><i data-feather="star"></i> Prodotti in evidenza</h3>
           <div class="sidebar-featured">
+            <button class="sf-item" onclick="openModal('Filtro Gasolio Gilbarco')">
+              <img src="https://images.unsplash.com/photo-1594913284562-63b784aeb272?w=80&q=70" alt="Filtro Gilbarco"
+                width="80" height="60" loading="lazy" />
+              <div>
+                <strong>Filtro Gasolio Gilbarco</strong>
+                <span>Ricambio originale</span>
+              </div>
+            </button>
+            <button class="sf-item" onclick="openModal('Filtro AdBlue Piusi 3D')">
+              <img src="https://images.unsplash.com/photo-1621258673733-14b2d3d3ef4d?w=80&q=70" alt="Filtro AdBlue"
+                width="80" height="60" loading="lazy" />
+              <div>
+                <strong>Filtro AdBlue Piusi 3D</strong>
+                <span>Nuova tecnologia</span>
+              </div>
+            </button>
             <button class="sf-item" onclick="openModal('Pompa Elettrica 70 l/min PIUSI')">
               <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=80&q=70" alt="Pompa carburante"
                 width="80" height="60" loading="lazy" />
               <div>
                 <strong>Pompa 70 l/min PIUSI</strong>
-                <span>Richiedi informazioni</span>
-              </div>
-            </button>
-            <button class="sf-item" onclick="openModal('Fleet Pro RFID')">
-              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=80&q=70" alt="Centralina flotte"
-                width="80" height="60" loading="lazy" />
-              <div>
-                <strong>Fleet Pro RFID</strong>
-                <span>Richiedi informazioni</span>
-              </div>
-            </button>
-            <button class="sf-item" onclick="openModal('Serbatoio 1000 lt ADR')">
-              <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=80&q=70"
-                alt="Serbatoio trasportabile" width="80" height="60" loading="lazy" />
-              <div>
-                <strong>Serbatoio 1000 lt ADR</strong>
                 <span>Richiedi informazioni</span>
               </div>
             </button>
@@ -340,7 +301,7 @@
         </div>
 
         <!-- Bottom CTA -->
-        <div class="eshop-bottom-cta">
+        <div class="eshop-bottom-cta" style="display: none;"> <!-- TODO: NextUpdate -->
           <div class="ebc-text">
             <h3>Cerchi qualcosa che non trovi qui?</h3>
             <p>Il nostro catalogo completo include oltre 200 prodotti. Parla con un nostro tecnico commerciale.</p>
@@ -377,7 +338,7 @@
           <li><a href="eshop.html">Pompe Carburante</a></li>
           <li><a href="eshop.html">Sistemi Additivi</a></li>
           <li><a href="eshop.html">Controllo Flotte</a></li>
-          <li><a href="eshop.html">Accessori</a></li>
+          <li><a href="eshop.html">Ricambi e Accessori</a></li>
         </ul>
       </nav>
       <nav class="footer-nav">
@@ -541,6 +502,18 @@
   <script src="components.js"></script>
   <script>
     let allProducts = [];
+    let currentCategory = 'all';
+    let currentBrands = [];
+
+    const categoryIcons = {
+      'pompe': 'droplet',
+      'accessori': 'tool',
+      'automazione': 'cpu',
+      'controllo flotte': 'truck',
+      'ricambi': 'settings',
+      'serbatoi': 'box',
+      'additivi': 'wind'
+    };
 
     // Caricamento Dinamico Prodotti
     async function initCatalog() {
@@ -548,11 +521,70 @@
       try {
         const response = await fetch('prodotti.json');
         allProducts = await response.json();
-        renderProducts(allProducts);
+        renderSidebar();
+        applyFilters();
       } catch (err) {
         console.error("Errore caricamento:", err);
         grid.innerHTML = `<div class="error-msg" style="grid-column: 1/-1; text-align: center; padding: 3rem;">Errore nel caricamento del file prodotti.json</div>`;
       }
+    }
+
+    function renderSidebar() {
+      const catCounts = { 'all': allProducts.length };
+      const brandsSet = new Set();
+
+      allProducts.forEach(p => {
+        const cat = p.categoria.toLowerCase();
+        catCounts[cat] = (catCounts[cat] || 0) + 1;
+        if (p.brand) brandsSet.add(p.brand);
+      });
+
+      // Render Categorie
+      const catUl = document.getElementById('dynamic-categories');
+      if (catUl) {
+        let catHtml = `
+          <li>
+            <button class="scat-btn ${currentCategory === 'all' ? 'active' : ''}" data-filter="all" onclick="filterProducts('all')">
+              <i data-feather="grid"></i> Tutti i prodotti
+              <span class="scat-count">${catCounts['all']}</span>
+            </button>
+          </li>
+        `;
+
+        const uniqueCats = Object.keys(catCounts).filter(c => c !== 'all').sort();
+        uniqueCats.forEach(cat => {
+          const icon = categoryIcons[cat] || 'box';
+          const catName = cat.charAt(0).toUpperCase() + cat.slice(1);
+          catHtml += `
+            <li>
+              <button class="scat-btn ${currentCategory === cat ? 'active' : ''}" data-filter="${cat}" onclick="filterProducts('${cat}')">
+                <i data-feather="${icon}"></i> ${catName}
+                <span class="scat-count">${catCounts[cat]}</span>
+              </button>
+            </li>
+          `;
+        });
+        catUl.innerHTML = catHtml;
+      }
+
+      // Render Marchi
+      const brandsContainer = document.getElementById('dynamic-brands');
+      if (brandsContainer) {
+        const sortedBrands = Array.from(brandsSet).sort();
+        let brandsHtml = '';
+        sortedBrands.forEach(brand => {
+          const isChecked = currentBrands.includes(brand) ? 'checked' : '';
+          brandsHtml += `
+            <label class="check-item">
+              <input type="checkbox" value="${brand}" onchange="toggleBrand('${brand}')" ${isChecked} />
+              <span>${brand}</span>
+            </label>
+          `;
+        });
+        brandsContainer.innerHTML = brandsHtml;
+      }
+
+      if (window.feather) feather.replace();
     }
 
     function renderProducts(products) {
@@ -565,7 +597,6 @@
         article.dataset.cat = p.categoria.toLowerCase();
         article.dataset.name = p.titolo.toLowerCase();
 
-        // Mapping Immagine: Prodotti/Nome Titolo.jpg
         const imgPath = `Prodotti/${p.titolo}.jpg`;
         const fallbackImg = "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=500&q=80";
 
@@ -606,26 +637,62 @@
       if (noResults) noResults.hidden = count > 0;
     }
 
-    // Filter products
-    window.filterProducts = function (cat, btn) {
-      document.querySelectorAll('.scat-btn').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-
-      const filtered = cat === 'all' ? allProducts : allProducts.filter(p => p.categoria.toLowerCase() === cat.toLowerCase());
-      renderProducts(filtered);
+    window.filterProducts = function (cat) {
+      currentCategory = cat.toLowerCase();
+      document.querySelectorAll('.scat-btn').forEach(b => {
+        if(b.dataset.filter === currentCategory) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
+      applyFilters();
     };
 
+    window.toggleBrand = function(brand) {
+      const idx = currentBrands.indexOf(brand);
+      if (idx > -1) {
+        currentBrands.splice(idx, 1);
+      } else {
+        currentBrands.push(brand);
+      }
+      applyFilters();
+    };
+
+    window.applyFilters = function() {
+      let filtered = allProducts;
+
+      if (currentCategory !== 'all') {
+        filtered = filtered.filter(p => p.categoria.toLowerCase() === currentCategory);
+      }
+
+      if (currentBrands.length > 0) {
+        filtered = filtered.filter(p => currentBrands.includes(p.brand));
+      }
+
+      const q = document.getElementById('product-search').value.toLowerCase().trim();
+      if (q) {
+        filtered = filtered.filter(p => p.titolo.toLowerCase().includes(q) || p.descrizione.toLowerCase().includes(q));
+      }
+
+      renderProducts(filtered);
+    }
+
     window.resetFilters = function () {
-      filterProducts('all', document.querySelector('.scat-btn[data-filter="all"]'));
+      currentCategory = 'all';
+      currentBrands = [];
       document.getElementById('product-search').value = '';
+
+      document.querySelectorAll('.scat-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.filter === 'all');
+      });
+      document.querySelectorAll('#dynamic-brands input').forEach(inp => inp.checked = false);
+
+      applyFilters();
     };
 
     // Search
-    document.getElementById('product-search').addEventListener('input', function () {
-      const q = this.value.toLowerCase().trim();
-      const filtered = allProducts.filter(p => p.titolo.toLowerCase().includes(q) || p.descrizione.toLowerCase().includes(q));
-      renderProducts(filtered);
-    });
+    document.getElementById('product-search').addEventListener('input', applyFilters);
 
     // View toggle
     const gridEl = document.getElementById('product-grid-full');

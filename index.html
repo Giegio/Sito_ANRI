@@ -178,7 +178,7 @@
               Chi Siamo <i data-feather="chevron-down"></i>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#referenze">Case Studies</a></li>
+              <li style="display: none;"><!-- TODO: NextUpdate --><a href="#referenze">Case Studies</a></li>
               <li><a href="chi-siamo.html">La nostra storia</a></li>
             </ul>
           </li>
@@ -461,14 +461,8 @@
         </div>
 
         <!-- Filtri Categoria -->
-        <div class="eshop-filters" role="tablist" aria-label="Filtra per categoria">
-          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Tutti</button>
-          <button class="filter-btn" data-filter="pompe" role="tab" aria-selected="false">Pompe Carburante</button>
-          <button class="filter-btn" data-filter="additivi" role="tab" aria-selected="false">Sistemi Additivi</button>
-          <button class="filter-btn" data-filter="serbatoi" role="tab" aria-selected="false">Serbatoi
-            Trasportabili</button>
-          <button class="filter-btn" data-filter="flotte" role="tab" aria-selected="false">Controllo Flotte</button>
-          <button class="filter-btn" data-filter="accessori" role="tab" aria-selected="false">Accessori</button>
+        <div class="eshop-filters" id="dynamic-index-filters" role="tablist" aria-label="Filtra per categoria">
+          <!-- Generato dinamicamente via JS -->
         </div>
 
         <!-- Product Grid -->
@@ -478,7 +472,7 @@
           </div>
         </div><!-- /product-grid -->
 
-        <div class="eshop-cta-row">
+        <div class="eshop-cta-row" style="display: none;"> <!-- TODO: NextUpdate -->
           <p>Non trovi quello che cerchi? Il nostro catalogo è molto più ampio.</p>
           <button class="btn btn-primary" onclick="openModal('Richiesta Catalogo Completo')">
             <i data-feather="download"></i> Richiedi il Catalogo Completo
@@ -489,7 +483,7 @@
     </section>
 
     <!-- ── CASE STUDIES (Referenze) ── -->
-    <section class="case-studies" id="referenze" aria-labelledby="case-heading">
+    <section class="case-studies" id="referenze" aria-labelledby="case-heading" style="display: none;"> <!-- TODO: NextUpdate -->
       <div class="container">
         <div class="section-header" data-reveal>
           <span class="section-label">Case Studies</span>
@@ -994,6 +988,9 @@
   =================================================== -->
   <script src="components.js"></script>
   <script>
+    let allIndexProducts = [];
+    let currentIndexCategory = 'all';
+
     // Index page specific logic only: E-Shop dynamic product loading.
     document.addEventListener('DOMContentLoaded', async () => {
       const grid = document.getElementById('product-grid');
@@ -1001,46 +998,105 @@
 
       try {
         const response = await fetch('prodotti.json');
-        const products = await response.json();
-        grid.innerHTML = '';
+        allIndexProducts = await response.json();
 
-        products.forEach((p) => {
-          const article = document.createElement('article');
-          article.className = 'product-card';
+        renderIndexFilters();
+        renderIndexProducts(allIndexProducts);
 
-          const rawCat = p.categoria.toLowerCase();
-          const filterCat = rawCat === 'automazione' ? 'flotte' : rawCat;
-          article.dataset.category = filterCat;
-
-          const imgPath = `Prodotti/${p.titolo}.jpg`;
-          const fallbackImg = 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&q=75';
-          const badgeHtml = p.tag
-            ? `<span class="product-badge ${p.tag.toLowerCase() === 'promo' ? 'product-badge--promo' : ''}">${p.tag}</span>`
-            : '';
-
-          article.innerHTML = `
-            <div class="product-img-wrap">
-              <img src="${imgPath}" alt="${p.titolo}" width="400" height="300" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImg}';">
-              ${badgeHtml}
-            </div>
-            <div class="product-body">
-              <span class="product-cat">${p.categoria}</span>
-              <h3 class="product-name">${p.titolo}</h3>
-              <p class="product-desc">${p.descrizione}</p>
-              <button class="btn btn-outline btn-sm" onclick="openModal('${p.titolo.replace(/'/g, "\\'")}')">
-                <i data-feather="info"></i> Richiedi Informazioni
-              </button>
-            </div>
-          `;
-          grid.appendChild(article);
-        });
-
-        if (window.feather) feather.replace();
       } catch (err) {
         console.error('Errore caricamento prodotti:', err);
         grid.innerHTML = '<p style="grid-column:1/-1; text-align:center;">Errore nel caricamento dei prodotti. Riprova più tardi.</p>';
       }
     });
+
+    function renderIndexFilters() {
+      const filtersContainer = document.getElementById('dynamic-index-filters');
+      if (!filtersContainer) return;
+
+      // Trova le categorie uniche
+      const categoriesSet = new Set();
+      allIndexProducts.forEach(p => {
+        if(p.categoria) categoriesSet.add(p.categoria.toLowerCase());
+      });
+      const uniqueCats = Array.from(categoriesSet).sort();
+
+      // Crea l'HTML dei bottoni
+      let filtersHtml = `<button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" onclick="filterIndexProducts('all')">Tutti</button>`;
+
+      uniqueCats.forEach(cat => {
+        // Rinomina esteticamente "automazione" in "Controllo Flotte" se presente
+        let displayName = cat.charAt(0).toUpperCase() + cat.slice(1);
+        if (cat === 'automazione') displayName = 'Controllo Flotte';
+
+        filtersHtml += `<button class="filter-btn" data-filter="${cat}" role="tab" aria-selected="false" onclick="filterIndexProducts('${cat}')">${displayName}</button>`;
+      });
+
+      filtersContainer.innerHTML = filtersHtml;
+    }
+
+    window.filterIndexProducts = function(cat) {
+      currentIndexCategory = cat.toLowerCase();
+
+      // Aggiorna lo stato "active" dei bottoni
+      document.querySelectorAll('#dynamic-index-filters .filter-btn').forEach(btn => {
+        if(btn.dataset.filter === currentIndexCategory) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+        } else {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        }
+      });
+
+      // Filtra e renderizza i prodotti
+      const filtered = currentIndexCategory === 'all'
+        ? allIndexProducts
+        : allIndexProducts.filter(p => {
+            const rawCat = p.categoria.toLowerCase();
+            const filterCat = rawCat === 'automazione' ? 'flotte' : rawCat;
+            return rawCat === currentIndexCategory || filterCat === currentIndexCategory;
+          });
+
+      renderIndexProducts(filtered);
+    };
+
+    function renderIndexProducts(products) {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+
+      products.forEach((p) => {
+        const article = document.createElement('article');
+        article.className = 'product-card';
+
+        const rawCat = p.categoria.toLowerCase();
+        const filterCat = rawCat === 'automazione' ? 'flotte' : rawCat;
+        article.dataset.category = filterCat;
+
+        const imgPath = `Prodotti/${p.titolo}.jpg`;
+        const fallbackImg = 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&q=75';
+        const badgeHtml = p.tag
+          ? `<span class="product-badge ${p.tag.toLowerCase() === 'promo' ? 'product-badge--promo' : ''}">${p.tag}</span>`
+          : '';
+
+        article.innerHTML = `
+          <div class="product-img-wrap">
+            <img src="${imgPath}" alt="${p.titolo}" width="400" height="300" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImg}';">
+            ${badgeHtml}
+          </div>
+          <div class="product-body">
+            <span class="product-cat">${p.categoria}</span>
+            <h3 class="product-name">${p.titolo}</h3>
+            <p class="product-desc">${p.descrizione}</p>
+            <button class="btn btn-outline btn-sm" onclick="openModal('${p.titolo.replace(/'/g, "\\'")}')">
+              <i data-feather="info"></i> Richiedi Informazioni
+            </button>
+          </div>
+        `;
+        grid.appendChild(article);
+      });
+
+      if (window.feather) feather.replace();
+    }
   </script>
   <!-- Sticky Mobile CTA -->
   <button class="mobile-sticky-cta" onclick="openModal('Mobile Floating CTA')" aria-label="Richiedi Preventivo">

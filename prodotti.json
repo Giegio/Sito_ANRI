@@ -33,5 +33,47 @@
     "categoria": "Controllo Flotte",
     "brand": "Piusi",
     "tag": "Best-Seller"
+  },
+  {
+    "titolo": "Filtro Gasolio Gilbarco",
+    "descrizione": "Filtro di ricambio originale Gilbarco per erogatori gasolio ad alta efficienza. Garantisce combustibile pulito e protegge le pompe.",
+    "categoria": "Ricambi",
+    "brand": "Gilbarco",
+    "tag": ""
+  },
+  {
+    "titolo": "Filtro Gasolio Piusi",
+    "descrizione": "Cartuccia filtro assorbimento acqua e impurità per gasolio. Ottimale per pompe Piusi e serbatoi trasportabili.",
+    "categoria": "Ricambi",
+    "brand": "Piusi",
+    "tag": ""
+  },
+  {
+    "titolo": "Filtro AdBlue Gilbarco",
+    "descrizione": "Filtro specifico per sistemi AdBlue Gilbarco, previene la cristallizzazione e protegge i componenti sensibili dell'erogatore.",
+    "categoria": "Ricambi",
+    "brand": "Gilbarco",
+    "tag": ""
+  },
+  {
+    "titolo": "Filtro AdBlue Piusi 3D",
+    "descrizione": "Filtro AdBlue Piusi con innovativa tecnologia 3D per filtrare efficacemente le impurità e preservare la qualità dell'additivo.",
+    "categoria": "Ricambi",
+    "brand": "Piusi",
+    "tag": "Promo"
+  },
+  {
+    "titolo": "Tastierino Erogatore Gilbarco",
+    "descrizione": "Tastierino numerico di ricambio originale per erogatori Gilbarco. Elevata resistenza agli agenti atmosferici e all'usura.",
+    "categoria": "Ricambi",
+    "brand": "Gilbarco",
+    "tag": ""
+  },
+  {
+    "titolo": "Kit Guarnizioni O-Ring Piusi",
+    "descrizione": "Kit completo di guarnizioni per la manutenzione e la riparazione di pompe, pistole e accessori Piusi.",
+    "categoria": "Ricambi",
+    "brand": "Piusi",
+    "tag": ""
   }
 ]
