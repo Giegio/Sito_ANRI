@@ -290,6 +290,13 @@
   .subcat-body {
     grid-area: body;
   }
+
+  .subcat-grid--reverse {
+    grid-template-columns: 1fr 1.1fr;
+    grid-template-areas:
+      "visual header"
+      "visual body";
+  }
 }
 
 .subcat-grid:last-of-type {
