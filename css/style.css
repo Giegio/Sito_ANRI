@@ -1006,6 +1006,39 @@ h1, h2, h3, h4, h5 {
   color: var(--dark);
 }
 
+/* Mobile Reference (Hidden by default) */
+.eshop-mobile-ref {
+  display: none;
+  margin-bottom: var(--sp-lg);
+}
+.emr-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.emr-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--green-light);
+  color: var(--green-dark);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 0.5rem;
+}
+.emr-icon svg { width: 28px; height: 28px; }
+.emr-card h3 { font-size: 1.35rem; color: var(--dark); }
+.emr-card p { font-size: 0.95rem; color: var(--text-light); max-width: 320px; line-height: 1.6; }
+.emr-card .btn { margin-top: 0.5rem; }
+
+
 /* Product Grid */
 .product-grid {
   display: grid;
@@ -1063,6 +1096,7 @@ h1, h2, h3, h4, h5 {
 }
 .product-badge--new  { background: var(--blue); color: #fff; }
 .product-badge--promo { background: #FF6B35; color: #fff; }
+.product-badge--best  { background: #FFD700; color: var(--dark); border: 1px solid rgba(0,0,0,0.1); }
 
 .product-body {
   padding: 1.1rem 1.2rem;
@@ -2024,3 +2058,23 @@ h1, h2, h3, h4, h5 {
   }
 }
 
+
+/* ============================================================
+   MOBILE RESPONSIVE OVERRIDES (< 767px)
+   ============================================================ */
+@media (max-width: 767px) {
+  /* E-Shop: Hide full grid, show reference CTA */
+  .eshop-filters,
+  #product-grid {
+    display: none !important;
+  }
+  .eshop-mobile-ref {
+    display: block !important;
+  }
+
+  /* Case Studies: Hide completely on mobile */
+  .case-studies,
+  #referenze {
+    display: none !important;
+  }
+}

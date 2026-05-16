@@ -48,7 +48,8 @@
 
   <!-- Preload critical assets -->
   <link rel="preload" as="image" href="img/hero_fuel_station_premium.png" />
-  <link rel="preload" href="https://fonts.gstatic.com/s/barlowcondensed/v12/HTAKL3o-R1syS1dfm77M336z2f69Eq7X9bg.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="https://fonts.gstatic.com/s/barlowcondensed/v12/HTAKL3o-R1syS1dfm77M336z2f69Eq7X9bg.woff2"
+    as="font" type="font/woff2" crossorigin />
 
   <!-- Icons (Feather) -->
   <script src="https://unpkg.com/feather-icons"></script>
@@ -262,8 +263,9 @@
 
         <div class="hero-visual">
           <div class="hero-img-wrap">
-            <img src="img/hero_fuel_station_premium.png" alt="Stazione di rifornimento professionale con erogatori moderni"
-              width="720" height="540" loading="eager" class="hero-img" onerror="this.style.display='none'" />
+            <img src="img/hero_fuel_station_premium.png"
+              alt="Stazione di rifornimento professionale con erogatori moderni" width="720" height="540"
+              loading="eager" class="hero-img" onerror="this.style.display='none'" />
             <div class="hero-img-badge" style="display: flex; align-items: center; gap: 8px; text-align: left;">
               <img src="img/Qualita.png" alt="Qualità" style="width: 28px; height: 28px;" />
               <span>Qualità<br />garantita!</span>
@@ -455,15 +457,23 @@
       <div class="container">
         <div class="section-header">
           <span class="section-label">E-Shop</span>
-          <h2 id="eshop-heading" class="section-title">I nostri prodotti</h2>
-          <p class="section-desc">Componenti e sistemi pronti per l'ordine. Seleziona la categoria o sfoglia il catalogo
-            completo.</p>
+          <h2 id="eshop-heading" class="section-title">Prodotti in evidenza</h2>
+          <p class="section-desc">Scopri i nostri prodotti best-seller e le ultime novità. Sfoglia il catalogo completo
+            per scoprire l'intera gamma.</p>
         </div>
 
-        <!-- Filtri Categoria -->
-        <div class="eshop-filters" id="dynamic-index-filters" role="tablist" aria-label="Filtra per categoria">
-          <!-- Generato dinamicamente via JS -->
+        <!-- Riferimento Mobile (Visibile solo < 767px via CSS) -->
+        <div class="eshop-mobile-ref">
+          <div class="emr-card">
+            <div class="emr-icon"><i data-feather="shopping-bag"></i></div>
+            <h3>Catalogo Completo Online</h3>
+            <p>Sfoglia la nostra gamma completa di pompe, serbatoi e accessori professionali pronti alla consegna.</p>
+            <a href="eshop.html" class="btn btn-primary">
+              Vai all'E-Shop <i data-feather="arrow-right"></i>
+            </a>
+          </div>
         </div>
+
 
         <!-- Product Grid -->
         <div class="product-grid" id="product-grid">
@@ -472,18 +482,19 @@
           </div>
         </div><!-- /product-grid -->
 
-        <div class="eshop-cta-row" style="display: none;"> <!-- TODO: NextUpdate -->
-          <p>Non trovi quello che cerchi? Il nostro catalogo è molto più ampio.</p>
-          <button class="btn btn-primary" onclick="openModal('Richiesta Catalogo Completo')">
-            <i data-feather="download"></i> Richiedi il Catalogo Completo
-          </button>
+        <div class="eshop-cta-row" style="text-align: center; margin-top: 3rem;">
+          <a href="eshop.html" class="btn btn-outline btn-lg">
+            <i data-feather="shopping-bag"></i> Vai all'E-Shop! <i data-feather="arrow-right"></i>
+          </a>
         </div>
+
 
       </div>
     </section>
 
     <!-- ── CASE STUDIES (Referenze) ── -->
-    <section class="case-studies" id="referenze" aria-labelledby="case-heading" style="display: none;"> <!-- TODO: NextUpdate -->
+    <section class="case-studies" id="referenze" aria-labelledby="case-heading" style="display: none;">
+      <!-- TODO: NextUpdate -->
       <div class="container">
         <div class="section-header" data-reveal>
           <span class="section-label">Case Studies</span>
@@ -989,7 +1000,6 @@
   <script src="js/components.js"></script>
   <script>
     let allIndexProducts = [];
-    let currentIndexCategory = 'all';
 
     // Index page specific logic only: E-Shop dynamic product loading.
     document.addEventListener('DOMContentLoaded', async () => {
@@ -998,9 +1008,11 @@
 
       try {
         const response = await fetch('prodotti.json');
-        allIndexProducts = await response.json();
+        const rawProducts = await response.json();
 
-        renderIndexFilters();
+        // Seleziona solo 4 prodotti prioritizzando i Best-Seller
+        allIndexProducts = selectFeaturedProducts(rawProducts, 4);
+
         renderIndexProducts(allIndexProducts);
 
       } catch (err) {
@@ -1009,56 +1021,22 @@
       }
     });
 
-    function renderIndexFilters() {
-      const filtersContainer = document.getElementById('dynamic-index-filters');
-      if (!filtersContainer) return;
+    function selectFeaturedProducts(products, limit) {
+      // 1. Priorità Best-Seller
+      const bestSellers = products.filter(p => p.tag && p.tag.toLowerCase() === 'best-seller');
 
-      // Trova le categorie uniche
-      const categoriesSet = new Set();
-      allIndexProducts.forEach(p => {
-        if(p.categoria) categoriesSet.add(p.categoria.toLowerCase());
-      });
-      const uniqueCats = Array.from(categoriesSet).sort();
+      // 2. Priorità Altri tag (Nuovo, Promo)
+      const otherTagged = products.filter(p => p.tag && p.tag !== '' && p.tag.toLowerCase() !== 'best-seller');
 
-      // Crea l'HTML dei bottoni
-      let filtersHtml = `<button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" onclick="filterIndexProducts('all')">Tutti</button>`;
+      // 3. Senza tag
+      const noTag = products.filter(p => !p.tag || p.tag === '');
 
-      uniqueCats.forEach(cat => {
-        // Rinomina esteticamente "automazione" in "Controllo Flotte" se presente
-        let displayName = cat.charAt(0).toUpperCase() + cat.slice(1);
-        if (cat === 'automazione') displayName = 'Controllo Flotte';
+      // Unisci le liste rispettando la priorità
+      const merged = [...bestSellers, ...otherTagged, ...noTag];
 
-        filtersHtml += `<button class="filter-btn" data-filter="${cat}" role="tab" aria-selected="false" onclick="filterIndexProducts('${cat}')">${displayName}</button>`;
-      });
-
-      filtersContainer.innerHTML = filtersHtml;
+      // Prendi i primi 4
+      return merged.slice(0, limit);
     }
-
-    window.filterIndexProducts = function(cat) {
-      currentIndexCategory = cat.toLowerCase();
-
-      // Aggiorna lo stato "active" dei bottoni
-      document.querySelectorAll('#dynamic-index-filters .filter-btn').forEach(btn => {
-        if(btn.dataset.filter === currentIndexCategory) {
-          btn.classList.add('active');
-          btn.setAttribute('aria-selected', 'true');
-        } else {
-          btn.classList.remove('active');
-          btn.setAttribute('aria-selected', 'false');
-        }
-      });
-
-      // Filtra e renderizza i prodotti
-      const filtered = currentIndexCategory === 'all'
-        ? allIndexProducts
-        : allIndexProducts.filter(p => {
-            const rawCat = p.categoria.toLowerCase();
-            const filterCat = rawCat === 'automazione' ? 'flotte' : rawCat;
-            return rawCat === currentIndexCategory || filterCat === currentIndexCategory;
-          });
-
-      renderIndexProducts(filtered);
-    };
 
     function renderIndexProducts(products) {
       const grid = document.getElementById('product-grid');
@@ -1075,7 +1053,7 @@
         const imgPath = `img/Prodotti/${p.titolo}.jpg`;
         const fallbackImg = 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&q=75';
         const badgeHtml = p.tag
-          ? `<span class="product-badge ${p.tag.toLowerCase() === 'promo' ? 'product-badge--promo' : ''}">${p.tag}</span>`
+          ? `<span class="product-badge ${p.tag.toLowerCase() === 'promo' ? 'product-badge--promo' : ''} ${p.tag.toLowerCase() === 'best-seller' ? 'product-badge--best' : ''}">${p.tag}</span>`
           : '';
 
         article.innerHTML = `
@@ -1097,6 +1075,7 @@
 
       if (window.feather) feather.replace();
     }
+
   </script>
   <!-- Sticky Mobile CTA -->
   <button class="mobile-sticky-cta" onclick="openModal('Mobile Floating CTA')" aria-label="Richiedi Preventivo">
