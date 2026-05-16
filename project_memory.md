@@ -33,7 +33,7 @@
 ## Design e Stile
 - **Estetica**: Premium, moderna, layout responsive e dinamico.
 - **Componenti**: Utilizzo di icone Feather, font Barlow Condensed e DM Sans, e componenti riutilizzabili definiti in `style.css` e `pages.css`.
-
+- **Materiali**: Focus esclusivo su soluzioni in Acciaio certificato (rimossi Polietilene e Vetroresina).
 ## Prossimi Passi
 - Configurare l'ID reale della GA4 in `analytics.js`.
 - Configurare il `GAS_URL` reale in `components.js` dopo aver pubblicato lo script su Google Apps Script.
