@@ -47,13 +47,13 @@
     rel="stylesheet" />
 
   <!-- Preload critical assets -->
-  <link rel="preload" as="image" href="hero_fuel_station_premium.png" />
+  <link rel="preload" as="image" href="img/hero_fuel_station_premium.png" />
   <link rel="preload" href="https://fonts.gstatic.com/s/barlowcondensed/v12/HTAKL3o-R1syS1dfm77M336z2f69Eq7X9bg.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Icons (Feather) -->
   <script src="https://unpkg.com/feather-icons"></script>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -61,7 +61,7 @@
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Anri Commerciale",
-    "image": "https://www.anricommerciale.it/Logo_OK.jpg",
+    "image": "https://www.anricommerciale.it/img/Logo_OK.jpg",
     "@id": "https://www.anricommerciale.it/",
     "url": "https://www.anricommerciale.it/",
     "telephone": "+393483650716",
@@ -107,7 +107,7 @@
     <div class="container header-inner">
 
       <!-- Logo -->
-      <a href="index.html" class="logo" aria-label="Anri Commerciale – Home"><img src="Logo_OK.jpg"
+      <a href="index.html" class="logo" aria-label="Anri Commerciale – Home"><img src="img/Logo_OK.jpg"
           alt="Anri Commerciale" style="height:48px;width:auto;display:block;" /></a>
 
       <!-- Primary Nav -->
@@ -262,10 +262,10 @@
 
         <div class="hero-visual">
           <div class="hero-img-wrap">
-            <img src="hero_fuel_station_premium.png" alt="Stazione di rifornimento professionale con erogatori moderni"
+            <img src="img/hero_fuel_station_premium.png" alt="Stazione di rifornimento professionale con erogatori moderni"
               width="720" height="540" loading="eager" class="hero-img" onerror="this.style.display='none'" />
             <div class="hero-img-badge" style="display: flex; align-items: center; gap: 8px; text-align: left;">
-              <img src="Qualita.png" alt="Qualità" style="width: 28px; height: 28px;" />
+              <img src="img/Qualita.png" alt="Qualità" style="width: 28px; height: 28px;" />
               <span>Qualità<br />garantita!</span>
             </div>
           </div>
@@ -330,7 +330,7 @@
           <!-- Categoria 1: Stazioni -->
           <article class="cat-card" id="soluzioni-rifornimento">
             <div class="cat-card-img-wrap">
-              <img src="Stazione.jpg" alt="Erogatori carburante per stazione di rifornimento stradale" width="800"
+              <img src="img/Stazione.jpg" alt="Erogatori carburante per stazione di rifornimento stradale" width="800"
                 height="500" loading="lazy" />
               <div class="cat-card-overlay"></div>
             </div>
@@ -357,7 +357,7 @@
           <!-- Categoria 2: Cisterne -->
           <article class="cat-card" id="cisterne">
             <div class="cat-card-img-wrap">
-              <img src="Cisterna.jpg" alt="Cisterna interrata per deposito carburante" width="700" height="450"
+              <img src="img/Cisterna.jpg" alt="Cisterna interrata per deposito carburante" width="700" height="450"
                 loading="lazy" />
               <div class="cat-card-overlay"></div>
             </div>
@@ -405,7 +405,7 @@
           <!-- Categoria 4: Datacenter -->
           <article class="cat-card" id="datacenter">
             <div class="cat-card-img-wrap">
-              <img src="Datacenter.jpg" alt="Sistemi di stoccaggio per Datacenter" width="700" height="450"
+              <img src="img/Datacenter.jpg" alt="Sistemi di stoccaggio per Datacenter" width="700" height="450"
                 loading="lazy" />
               <div class="cat-card-overlay"></div>
             </div>
@@ -811,7 +811,7 @@
 
       <div class="footer-brand">
         <div class="logo">
-          <img src="Logo_OK.jpg" alt="Anri Commerciale" style="height:48px;width:auto;display:block;" />
+          <img src="img/Logo_OK.jpg" alt="Anri Commerciale" style="height:48px;width:auto;display:block;" />
         </div>
         <p class="footer-tagline">Tecnologia avanzata per ogni punto di rifornimento. dal 2001 al fianco di stazioni
           stradali e flotte private.</p>
@@ -986,7 +986,7 @@
   <!-- ===================================================
        JAVASCRIPT
   =================================================== -->
-  <script src="components.js"></script>
+  <script src="js/components.js"></script>
   <script>
     let allIndexProducts = [];
     let currentIndexCategory = 'all';
@@ -1072,7 +1072,7 @@
         const filterCat = rawCat === 'automazione' ? 'flotte' : rawCat;
         article.dataset.category = filterCat;
 
-        const imgPath = `Prodotti/${p.titolo}.jpg`;
+        const imgPath = `img/Prodotti/${p.titolo}.jpg`;
         const fallbackImg = 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&q=75';
         const badgeHtml = p.tag
           ? `<span class="product-badge ${p.tag.toLowerCase() === 'promo' ? 'product-badge--promo' : ''}">${p.tag}</span>`

@@ -2,7 +2,7 @@
 <html lang="it">
 
 <head>
-    <script src="analytics.js"></script>
+    <script src="js/analytics.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -49,9 +49,9 @@
   <link rel="preload" href="https://fonts.gstatic.com/s/barlowcondensed/v12/HTAKL3o-R1syS1dfm77M336z2f69Eq7X9bg.woff2" as="font" type="font/woff2" crossorigin />
 
   <script src="https://unpkg.com/feather-icons"></script>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link rel="stylesheet" href="eshop.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/eshop.css" />
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -90,7 +90,7 @@
   <!-- HEADER -->
   <header class="site-header" id="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="logo" aria-label="Anri Commerciale – Home"><img src="Logo_OK.jpg"
+      <a href="index.html" class="logo" aria-label="Anri Commerciale – Home"><img src="img/Logo_OK.jpg"
           alt="Anri Commerciale" style="height:48px;width:auto;display:block;" /></a>
       <nav class="primary-nav" id="primary-nav" aria-label="Navigazione principale">
         <ul class="nav-list">
@@ -321,7 +321,7 @@
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="logo"><img src="Logo_OK.jpg" alt="Anri Commerciale"
+        <a href="index.html" class="logo"><img src="img/Logo_OK.jpg" alt="Anri Commerciale"
             style="height:48px;width:auto;display:block;" /></a>
         <p class="footer-tagline">Tecnologia avanzata per ogni punto di rifornimento. dal 2001.</p>
         <div class="footer-social">
@@ -499,7 +499,7 @@
     </div>
   </div>
 
-  <script src="components.js"></script>
+  <script src="js/components.js"></script>
   <script>
     let allProducts = [];
     let currentCategory = 'all';
@@ -597,7 +597,7 @@
         article.dataset.cat = p.categoria.toLowerCase();
         article.dataset.name = p.titolo.toLowerCase();
 
-        const imgPath = `Prodotti/${p.titolo}.jpg`;
+        const imgPath = `img/Prodotti/${p.titolo}.jpg`;
         const fallbackImg = "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=500&q=80";
 
         let badgeHtml = p.tag ? `<span class="pcard-badge ${p.tag.toLowerCase() === 'promo' ? 'pcard-badge--promo' : ''}">${p.tag}</span>` : '';
