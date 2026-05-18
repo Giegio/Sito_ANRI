@@ -6,6 +6,17 @@ Quando sarai pronto a pubblicarli, ti basterà cercare nei file HTML la stringa 
 
 ---
 
+## 3. Prezziari Luminosi
+*Motivazione: Il fornitore attuale non è più disponibile. Sezione nascosta in attesa di nuovo fornitore.*
+
+**Elementi nascosti:**
+* `index.html`: La voce "Prezziari Luminosi" nella lista della Categoria 01.
+* `stazioni.html`: L'intera sezione `<section id="prezziari" ...>`.
+* `stazioni.html`: Il pulsante di scelta rapida (pill) nell'header della pagina.
+* *(In tutte le pagine)*: La voce "Prezziari Luminosi" nel menu di navigazione principale (Dropdown soluzioni).
+
+---
+
 ## 1. Referenze d'eccellenza (Case Studies)
 *Motivazione: In attesa dell'autorizzazione dei clienti per poter pubblicare i loro nomi e le foto degli impianti.*
 
@@ -17,6 +28,17 @@ Quando sarai pronto a pubblicarli, ti basterà cercare nei file HTML la stringa 
 
 ---
 
+## 3. Prezziari Luminosi
+*Motivazione: Il fornitore attuale non è più disponibile. Sezione nascosta in attesa di nuovo fornitore.*
+
+**Elementi nascosti:**
+* `index.html`: La voce "Prezziari Luminosi" nella lista della Categoria 01.
+* `stazioni.html`: L'intera sezione `<section id="prezziari" ...>`.
+* `stazioni.html`: Il pulsante di scelta rapida (pill) nell'header della pagina.
+* *(In tutte le pagine)*: La voce "Prezziari Luminosi" nel menu di navigazione principale (Dropdown soluzioni).
+
+---
+
 ## 2. Richieste Catalogo Completo
 *Motivazione: I prodotti trattati sono moltissimi e il catalogo PDF generale non è ancora pronto e impaginato.*
 
@@ -24,5 +46,16 @@ Quando sarai pronto a pubblicarli, ti basterà cercare nei file HTML la stringa 
 * `index.html`: La barra `eshop-cta-row` in fondo alla sezione E-Shop (che invitava a scaricare o richiedere il catalogo completo).
 * `eshop.html`: Il pulsante "Catalogo PDF" nell'header (in alto a destra).
 * `eshop.html`: Il banner `eshop-bottom-cta` in fondo all'elenco dei prodotti ("Scarica il Catalogo PDF").
+
+---
+
+## 3. Prezziari Luminosi
+*Motivazione: Il fornitore attuale non è più disponibile. Sezione nascosta in attesa di nuovo fornitore.*
+
+**Elementi nascosti:**
+* `index.html`: La voce "Prezziari Luminosi" nella lista della Categoria 01.
+* `stazioni.html`: L'intera sezione `<section id="prezziari" ...>`.
+* `stazioni.html`: Il pulsante di scelta rapida (pill) nell'header della pagina.
+* *(In tutte le pagine)*: La voce "Prezziari Luminosi" nel menu di navigazione principale (Dropdown soluzioni).
 
 ---
